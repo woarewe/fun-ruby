@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require_relative "lib/fun/ruby/version"
+require_relative "lib/fun_ruby/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "fun-ruby"
-  spec.version       = Fun::Ruby::VERSION
+  spec.version       = FunRuby::VERSION
   spec.authors       = ["woarewe"]
   spec.email         = ["rostislav.zhuravsky@gmail.com"]
 
   spec.summary       = "Write a short summary, because RubyGems requires one."
   spec.description   = "Write a longer description or delete this line."
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.7.4")
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
