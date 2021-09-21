@@ -1,5 +1,5 @@
 module FunRuby
-  module FunArray
+  module Array
     class Struct
       def self.new(...)
         super.freeze

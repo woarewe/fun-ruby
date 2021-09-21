@@ -1,18 +1,13 @@
+require_relative "enum/impl"
+require_relative "curried/function"
+
 module FunRuby
   module Enum
     class << self
-      def each(function = nil, collection = nil)
-        curried = Impl.method(:each).curry
-
-        if function
-          raise ArgumentError, "function has to respond to #call" unless function.respond_to?(:call)
-
-          curried = curried.(function)
-        end
-
-        return curried if collection.nil?
-
-        curried.(collection)
+      def each(*args)
+        Curried::Function.new(
+          function: Enum::Impl.method(:each)
+        ).call(*args)
       end
 
       def map(function = nil, collection = nil)
@@ -33,4 +28,4 @@ module FunRuby
   end
 end
 
-binding.irb
+FunRuby::Enum.each.(->(x) { puts x }).([1,2,3])
