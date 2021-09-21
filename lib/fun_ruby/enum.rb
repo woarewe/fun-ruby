@@ -1,6 +1,3 @@
-require_relative "enum/impl"
-require_relative "curried/function"
-
 module FunRuby
   module Enum
     class << self
@@ -27,5 +24,3 @@ module FunRuby
     end
   end
 end
-
-FunRuby::Enum.each.(->(x) { puts x }).([1,2,3])

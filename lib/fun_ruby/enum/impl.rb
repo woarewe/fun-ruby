@@ -7,8 +7,7 @@ module FunRuby
         end
 
         def map(function, collection)
-          result = enum(function).map(collection)
-          result
+          enum(collection).map(&function)
         end
 
         private

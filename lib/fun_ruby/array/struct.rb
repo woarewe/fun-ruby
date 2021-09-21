@@ -1,6 +1,8 @@
 module FunRuby
   module Array
     class Struct
+      include Enumerable
+
       def self.new(...)
         super.freeze
       end
@@ -35,7 +37,7 @@ module FunRuby
       end
 
       def to_enum
-        array.enum
+        Enumerator.new(self)
       end
 
       private
