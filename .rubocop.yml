@@ -1,5 +1,6 @@
 AllCops:
-  TargetRubyVersion: 3.0.0
+  TargetRubyVersion: 3.0.2
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -8,6 +9,12 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
+
+Style/LambdaCall:
+  EnforcedStyle: braces
+
+Style/ModuleFunction:
+  Enabled: false
 
 Layout/LineLength:
   Max: 120
