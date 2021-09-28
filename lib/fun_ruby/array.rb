@@ -1,15 +1,21 @@
+# frozen_string_literal: true
+
 module FunRuby
   module Array
-    module_function
+    include Core
 
-    def each(function = nil, collection = nil)
-      curried = method(:each_impl).curry
+    def size(array = nil)
+      _curried(:array, array)
     end
 
     private
 
-    def each_impl(function, collection)
-      collection.to_enum.each(&func)
+    def _size(array)
+      _array(array).size
+    end
+
+    def _array(array)
+      array.to_a
     end
   end
 end

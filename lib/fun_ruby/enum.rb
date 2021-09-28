@@ -49,46 +49,46 @@ module FunRuby
     private
 
     def _all?(function, enumerable)
-      enum(enumerable).all?(&function)
+      _enum(enumerable).all?(&function)
     end
 
     def _any?(function, enumerable)
-      enum(enumerable).any?(&function)
+      _enum(enumerable).any?(&function)
     end
 
     def _chain(enumerable, *enumerables)
-      enum(enumerable).chain(*enumerables)
+      _enum(enumerable).chain(*enumerables)
     end
 
     def _chunk(function, enumerable)
-      enum(enumerable).chunk(&function)
+      _enum(enumerable).chunk(&function)
     end
 
     def _chunk_while(function, enumerable)
-      enum(enumerable).chunk_while(&function)
+      _enum(enumerable).chunk_while(&function)
     end
 
     def _count_by(function, enumerable)
-      enum(enumerable).count(&function)
+      _enum(enumerable).count(&function)
     end
 
     def _take(amount, enumerable)
-      enum(enumerable).take(amount)
+      _enum(enumerable).take(amount)
     end
 
     def _each(function, enumerable)
-      enum(enumerable).each(&function)
+      _enum(enumerable).each(&function)
     end
 
     def _map(function, enumerable)
-      enum(enumerable).map(&function)
+      _enum(enumerable).map(&function)
     end
 
     def _select(function, enumerable)
-      enum(enumerable).select(&function)
+      _enum(enumerable).select(&function)
     end
 
-    def enum(enumerable)
+    def _enum(enumerable)
       enumerable.to_enum
     end
   end
