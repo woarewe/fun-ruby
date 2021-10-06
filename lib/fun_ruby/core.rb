@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require_relative "../fun_ruby"
 
 module FunRuby
