@@ -42,9 +42,9 @@ module FunRuby
     # @param function [#call/1]
     # @param enumerable [#to_enum]
     #
-    # @return [::Array] the passed collection
+    # @return [::Array] the passed enumerable
     #
-    # @example Basic usage
+    # @example Basic
     #   F::Enum.each(->(x) { puts x }, [1, 2, 3]) #=> [1, 2, 3]
     #
     # @example Curried
@@ -58,63 +58,103 @@ module FunRuby
       curried(:each, function, enumerable)
     end
 
-    # Applies a function to each element of a collection and
-    # returns a new collection with calculated values
+    # Returns a new enumerable with new values calculated
+    # by applying a function to each element of a passed enumerable
     #
-    # @param [#call/1] function an applicable function
-    # @param [#to_enum] enumerable a collection with init values
+    # @param function [#call/1]
+    # @param enumerable [#to_enum]
     #
-    # @return [::Array] a new collection with calculated values
+    # @return [::Array] a new enumerable with calculated values
+    #
+    # @example Basic
+    #   F::Enum.map(->(x) { x * 2 }, [1, 2, 3]) #=> [2, 4, 6]
+    #
+    # @example Curried
+    #   curried = F::Enum.map
+    #   curried.(->(x) { x * 2 }).([1, 2, 3]) #=> [2, 4, 6]
+    #
+    # @example Curried with placeholder
+    #   curried = F::Enum.map(F._, [1, 2, 3])
+    #   curried.(->(x) { x * 2 }) # => [2, 4, 6]
     def map(function = _, enumerable = _)
       curried(:map, function, enumerable)
     end
 
+    # Returns a new enumerable containing only these elements
+    # results of calling a function on them are truthy
+    #
+    # @param function [#call/1]
+    # @param enumerable [#to_enum]
+    #
+    # @return [::Array] a new enumerable with selected values
+    #
+    # @example Basic
+    #   F::Enum.select(->(x) { x % 2 == 0 }, [1, 2, 3, 4, 5]) #=> [2, 4]
+    #
+    # @example Curried
+    #   curried = F::Enum.select
+    #   curried.(->(x) { x % 2 == 0 }).( [1, 2, 3, 4, 5]) #=> [2, 4]
+    #
+    # @example Curried with placeholder
+    #   curried = F::Enum.select(F._, [1, 2, 3, 4, 5])
+    #   curried.(->(x) { x % 2 == 0 }) #=> [2, 4]
     def select(function = _, enumerable = _)
       curried(:select, function, enumerable)
     end
 
     private
 
+    # @private
     def _all?(function, enumerable)
       _enum(enumerable).all?(&function)
     end
 
+    # @private
     def _any?(function, enumerable)
       _enum(enumerable).any?(&function)
     end
 
+    # @private
     def _chain(enumerable, *enumerables)
       _enum(enumerable).chain(*enumerables)
     end
 
+    # @private
     def _chunk(function, enumerable)
       _enum(enumerable).chunk(&function)
     end
 
+    # @private
     def _chunk_while(function, enumerable)
       _enum(enumerable).chunk_while(&function)
     end
 
+    # @private
     def _count_by(function, enumerable)
       _enum(enumerable).count(&function)
     end
 
+    # @private
     def _take(amount, enumerable)
       _enum(enumerable).take(amount)
     end
 
+    # @private
     def _each(function, enumerable)
       _enum(enumerable).each(&function)
     end
 
+    # @private
     def _map(function, enumerable)
       _enum(enumerable).map(&function)
     end
 
+    # @private
     def _select(function, enumerable)
       _enum(enumerable).select(&function)
     end
 
+    # @private
     def _enum(enumerable)
       enumerable.to_enum
     end
