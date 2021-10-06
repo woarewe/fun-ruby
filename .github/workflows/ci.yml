@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  tests:
+  ci:
     runs-on: ubuntu-latest
     strategy:
       matrix:
