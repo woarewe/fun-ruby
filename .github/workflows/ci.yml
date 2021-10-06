@@ -38,3 +38,6 @@ jobs:
 
       - name: Run tests
         run: bin/rspec
+
+      - name: Run doc tests
+        run: bin/yard doctest

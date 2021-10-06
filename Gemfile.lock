@@ -8,6 +8,7 @@ GEM
   specs:
     awesome_print (1.9.2)
     diff-lcs (1.4.4)
+    minitest (5.14.4)
     rake (13.0.6)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -22,6 +23,10 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
+    yard (0.9.26)
+    yard-doctest (0.1.17)
+      minitest
+      yard
 
 PLATFORMS
   ruby
@@ -31,6 +36,8 @@ DEPENDENCIES
   fun-ruby!
   rake (~> 13.0.6)
   rspec (~> 3.10.0)
+  yard (~> 0.9.26)
+  yard-doctest (~> 0.1.17)
 
 BUNDLED WITH
    1.17.3

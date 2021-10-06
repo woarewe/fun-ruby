@@ -1,0 +1,7 @@
+--title 'dry-types'
+--query '@api.text != "private"'
+--embed-mixins
+--output doc
+--markup markdown
+--plugin yard-doctest
+lib/**/*.rb

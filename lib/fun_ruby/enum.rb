@@ -36,10 +36,35 @@ module FunRuby
       curried(:take, amount, enumerable)
     end
 
+    # Applies a function to each element of an enumerable and
+    # returns the initial enumerable
+    #
+    # @param function [#call/1]
+    # @param enumerable [#to_enum]
+    #
+    # @return [::Array] the passed collection
+    #
+    # @example Basic usage
+    #   F::Enum.each(->(x) { puts x }, [1, 2, 3]) #=> [1, 2, 3]
+    #
+    # @example Curried
+    #   curried = F::Enum.each
+    #   curried.(->(x) { puts x }).([1, 2, 3]) #=> [1, 2, 3]
+    #
+    # @example Curried with placeholder
+    #   curried = F::Enum.each(F._, [1, 2, 3])
+    #   curried.(->(x) { puts x }) #=> [1, 2, 3]
     def each(function = _, enumerable = _)
       curried(:each, function, enumerable)
     end
 
+    # Applies a function to each element of a collection and
+    # returns a new collection with calculated values
+    #
+    # @param [#call/1] function an applicable function
+    # @param [#to_enum] enumerable a collection with init values
+    #
+    # @return [::Array] a new collection with calculated values
     def map(function = _, enumerable = _)
       curried(:map, function, enumerable)
     end
