@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 
+require_relative "core"
+
 module FunRuby
   module String
     include Core
 
     extend self
 
-    def match(regexp = nil, string = nil)
-      _curried(:match, regexp, string)
+    def match(regexp = _, string = _)
+      curried(regexp, string)
     end
 
-    def match?(regexp = nil, string = nil)
-      _curried(:match?, regexp, string)
+    def match?(regexp = _, string = _)
+      curried(:match?, regexp, string)
     end
 
-    def split(splitter = nil, string = nil)
-      _curried(:split, splitter, string)
+    def split(splitter = _, string = _)
+      curried(:split, splitter, string)
     end
 
     private

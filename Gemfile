@@ -11,4 +11,4 @@ gem "rspec", "~> 3.0"
 
 gem "rubocop", "~> 1.7"
 
-gem "zeitwerk"
+gem "debug"

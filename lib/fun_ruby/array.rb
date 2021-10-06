@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
+require_relative "core"
+
 module FunRuby
   module Array
     include Core
 
-    def size(array = nil)
-      _curried(:array, array)
+    extend self
+
+    def size(array = _)
+      curried(:size, array)
     end
 
     private

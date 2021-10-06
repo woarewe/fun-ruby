@@ -1,49 +1,51 @@
 # frozen_string_literal: true
 
+require_relative "core"
+
 module FunRuby
   module Enum
     include Core
 
     extend self
 
-    def all?(function = nil, enumerable = nil)
-      _curried(:all?, function, enumerable)
+    def all?(function = _, enumerable = _)
+      curried(:all?, function, enumerable)
     end
 
-    def any?(function = nil, enumerable = nil)
-      _curried(:any?, function, enumerable)
+    def any?(function = _, enumerable = _)
+      curried(:any?, function, enumerable)
     end
 
-    def chain(enumerable = nil, *enumerables)
-      _curried(:chain, enumerable, *enumerables)
+    def chain(enumerable = _, *enumerables)
+      curried(:chain, enumerable, *enumerables)
     end
 
-    def chunk(function = nil, enumerable = nil)
-      _curried(:chunk, function, enumerable)
+    def chunk(function = _, enumerable = _)
+      curried(:chunk, function, enumerable)
     end
 
-    def chunk_while(function = nil, enumerable = nil)
-      _curried(:chunk_while, function, enumerable)
+    def chunk_while(function = _, enumerable = _)
+      curried(:chunk_while, function, enumerable)
     end
 
-    def count_by(function = nil, enumerable = nil)
-      _curried(:count_by, function, enumerable)
+    def count_by(function = _, enumerable = _)
+      curried(:count_by, function, enumerable)
     end
 
-    def take(amount = nil, enumerable = nil)
-      _curried(:take, amount, enumerable)
+    def take(amount = _, enumerable = _)
+      curried(:take, amount, enumerable)
     end
 
-    def each(function = nil, enumerable = nil)
-      _curried(:each, function, enumerable)
+    def each(function = _, enumerable = _)
+      curried(:each, function, enumerable)
     end
 
-    def map(function = nil, enumerable = nil)
-      _curried(:map, function, enumerable)
+    def map(function = _, enumerable = _)
+      curried(:map, function, enumerable)
     end
 
-    def select(function = nil, enumerable = nil)
-      _curried(:select, function, enumerable)
+    def select(function = _, enumerable = _)
+      curried(:select, function, enumerable)
     end
 
     private
