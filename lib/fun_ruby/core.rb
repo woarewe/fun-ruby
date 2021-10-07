@@ -5,9 +5,9 @@ require_relative "../fun_ruby"
 module FunRuby
   # @private
   module Core
-    def _
-      PLACEHOLDER
-    end
+    include FunRuby
+
+    private
 
     def curry(&block)
       handler([], &block.curry)

@@ -3,6 +3,7 @@
 require_relative "core"
 
 module FunRuby
+  # Module containing methods for enumerables
   module Enum
     include Core
 
@@ -31,30 +32,6 @@ module FunRuby
     #   curried.(->(x) { x % 2 == 0 }) # => true
     def all?(function = _, enumerable = _)
       curried(:all?, function, enumerable)
-    end
-
-    def any?(function = _, enumerable = _)
-      curried(:any?, function, enumerable)
-    end
-
-    def chain(enumerable = _, *enumerables)
-      curried(:chain, enumerable, *enumerables)
-    end
-
-    def chunk(function = _, enumerable = _)
-      curried(:chunk, function, enumerable)
-    end
-
-    def chunk_while(function = _, enumerable = _)
-      curried(:chunk_while, function, enumerable)
-    end
-
-    def count_by(function = _, enumerable = _)
-      curried(:count_by, function, enumerable)
-    end
-
-    def take(amount = _, enumerable = _)
-      curried(:take, amount, enumerable)
     end
 
     # Applies a function to each element of an enumerable and
@@ -125,57 +102,22 @@ module FunRuby
 
     private
 
-    # @private
     def _all?(function, enumerable)
       _enum(enumerable).all?(&function)
     end
 
-    # @private
-    def _any?(function, enumerable)
-      _enum(enumerable).any?(&function)
-    end
-
-    # @private
-    def _chain(enumerable, *enumerables)
-      _enum(enumerable).chain(*enumerables)
-    end
-
-    # @private
-    def _chunk(function, enumerable)
-      _enum(enumerable).chunk(&function)
-    end
-
-    # @private
-    def _chunk_while(function, enumerable)
-      _enum(enumerable).chunk_while(&function)
-    end
-
-    # @private
-    def _count_by(function, enumerable)
-      _enum(enumerable).count(&function)
-    end
-
-    # @private
-    def _take(amount, enumerable)
-      _enum(enumerable).take(amount)
-    end
-
-    # @private
     def _each(function, enumerable)
       _enum(enumerable).each(&function)
     end
 
-    # @private
     def _map(function, enumerable)
       _enum(enumerable).map(&function)
     end
 
-    # @private
     def _select(function, enumerable)
       _enum(enumerable).select(&function)
     end
 
-    # @private
     def _enum(enumerable)
       enumerable.to_enum
     end
