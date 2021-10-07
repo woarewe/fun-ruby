@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fun-ruby (0.0.1)
+    fun-ruby (0.1.0)
 
 GEM
   remote: https://rubygems.org/

@@ -30,3 +30,7 @@ Naming/FileName:
 
 Style/DocumentationMethod:
   Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
