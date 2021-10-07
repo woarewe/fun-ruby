@@ -24,8 +24,9 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_development_dependency "awesome_print", "~> 1.9.2"
-  spec.add_development_dependency "rspec", "~> 3.10.0"
   spec.add_development_dependency "rake", "~> 13.0.6"
+  spec.add_development_dependency "rspec", "~> 3.10.0"
+  spec.add_development_dependency "rubocop", "~> 0.81.0"
   spec.add_development_dependency "yard", "~> 0.9.26"
   spec.add_development_dependency "yard-doctest", "~> 0.1.17"
 

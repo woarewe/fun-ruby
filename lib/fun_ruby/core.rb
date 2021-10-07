@@ -3,6 +3,7 @@
 require_relative "../fun_ruby"
 
 module FunRuby
+  # @private
   module Core
     def _
       PLACEHOLDER
