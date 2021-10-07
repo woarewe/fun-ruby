@@ -8,6 +8,27 @@ module FunRuby
 
     extend self
 
+    # Returns a boolean which represents if all results
+    # of applying a function to each element are truthy
+    #
+    # @param function [#call/1]
+    # @param enumerable [#to_enum]
+    #
+    # @return [Boolean]
+    #
+    # @example Basic returning true
+    #   F::Enum.all?(->(x) { x % 2 == 0 }, [2, 4, 6]) #=> true
+    #
+    # @example Basic returning false
+    #   F::Enum.all?(->(x) { x % 2 == 0 }, [2, 5, 6]) #=> false
+    #
+    # @example Curried
+    #   curried = F::Enum.all?
+    #   curried.(->(x) { x % 2 == 0 }).([1, 2, 3]) #=> false
+    #
+    # @example Curried with placeholder
+    #   curried = F::Enum.all?(F._, [2, 4, 6])
+    #   curried.(->(x) { x % 2 == 0 }) # => true
     def all?(function = _, enumerable = _)
       curried(:all?, function, enumerable)
     end
