@@ -100,6 +100,50 @@ module FunRuby
       curried(:select, function, enumerable)
     end
 
+    # Returns a single item by iterating through the list, successively
+    # calling the iterator function and passing it an accumulator value
+    # and the current value from the array, and then passing the result
+    # to the next call.
+    #
+    # @param function [#call/2] ->(accumulator, element) {}
+    # @param accumulator Object
+    # @param enumerable [#to_enum]
+    #
+    # @return Object a result of reducing the enumerable
+    #
+    # @example Basic: sum of all elements
+    #   F::Enum.reduce(->(acc, x) { acc + x }, 0, [1, 2, 3]) #=> 6
+    #
+    # @example Basic: subtraction of all elements
+    #   F::Enum.reduce(->(acc, x) { acc - x }, 0, [1, 2, 3]) #=> -6
+    #
+    # @example Basic: histogram
+    #   F::Enum.reduce(
+    #     ->(acc, x) { acc[x] += 1; acc },
+    #     Hash.new(0),
+    #     [1, 1, 1, 2, 2, 3]
+    #   ) #=> { 1 => 3, 2 => 2, 3 => 1 }
+    #
+    # @example Curried: sum
+    #   curried = F::Enum.reduce
+    #   curried.(->(acc, x) { acc + x }).(0).([1, 2, 3]) #=> 6
+    #
+    # @example Curried: sum with placeholder for function
+    #   curried = F::Enum.reduce(F._, 0, [1, 2, 3])
+    #   curried.(->(acc, x) { acc + x }) #=> 6
+    #
+    # @example Curried: sum with placeholder for accumulator
+    #   curried = F::Enum.reduce(->(acc, x) { acc + x }, F._, [1, 2, 3])
+    #   curried.(0) #=> 6
+    #
+    # @example Curried: sum with placeholder for function and accumulator
+    #   curried = F::Enum.reduce(F._, F._, [1, 2, 3])
+    #   curried.(->(acc, x) { acc + x }, 0) # => 6
+    #   curried.(->(acc, x) { acc + x }).(0) # => 6
+    def reduce(function = _, accumulator = _, enumerable = _)
+      curried(:reduce, function, accumulator, enumerable)
+    end
+
     private
 
     def _all?(function, enumerable)
@@ -116,6 +160,10 @@ module FunRuby
 
     def _select(function, enumerable)
       _enum(enumerable).select(&function)
+    end
+
+    def _reduce(function, accumulator, enumerable)
+      _enum(enumerable).reduce(accumulator, &function)
     end
 
     def _enum(enumerable)
