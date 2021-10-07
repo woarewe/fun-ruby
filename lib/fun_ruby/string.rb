@@ -11,6 +11,8 @@ module FunRuby
 
     # Split a string by a passed delimiter
     #
+    # @since 0.1.0
+    #
     # @param splitter [::Array|::Regexp]
     # @param string [::String]
     #

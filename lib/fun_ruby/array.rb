@@ -11,6 +11,8 @@ module FunRuby
 
     # Returns a size of array
     #
+    # @since 0.1.0
+    #
     # @param array [::Array]
     #
     # @return [Integer]

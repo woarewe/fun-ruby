@@ -12,6 +12,8 @@ module FunRuby
     # Returns a boolean which represents if all results
     # of applying a function to each element are truthy
     #
+    # @since 0.1.0
+    #
     # @param function [#call/1]
     # @param enumerable [#to_enum]
     #
@@ -37,6 +39,8 @@ module FunRuby
     # Applies a function to each element of an enumerable and
     # returns the initial enumerable
     #
+    # @since 0.1.0
+    #
     # @param function [#call/1]
     # @param enumerable [#to_enum]
     #
@@ -59,6 +63,8 @@ module FunRuby
     # Returns a new enumerable with new values calculated
     # by applying a function to each element of a passed enumerable
     #
+    # @since 0.1.0
+    #
     # @param function [#call/1]
     # @param enumerable [#to_enum]
     #
@@ -80,6 +86,8 @@ module FunRuby
 
     # Returns a new enumerable containing only these elements
     # results of calling a function on them are truthy
+    #
+    # @since 0.1.0
     #
     # @param function [#call/1]
     # @param enumerable [#to_enum]
@@ -104,6 +112,8 @@ module FunRuby
     # calling the iterator function and passing it an accumulator value
     # and the current value from the array, and then passing the result
     # to the next call.
+    #
+    # @since 0.1.0
     #
     # @param function [#call/2] ->(accumulator, element) {}
     # @param accumulator Object
