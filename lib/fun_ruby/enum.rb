@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "core"
+require_relative "common/helpers"
 
 module FunRuby
   # Module containing methods for enumerables
   module Enum
-    include Core
+    include Common::Helpers
 
     extend self
 
@@ -32,8 +32,8 @@ module FunRuby
     # @example Curried with placeholder
     #   curried = F::Enum.all?(F._, [2, 4, 6])
     #   curried.(->(x) { x % 2 == 0 }) # => true
-    def all?(function = _, enumerable = _)
-      curried(:all?, function, enumerable)
+    def all?(function = F._, enumerable = F._)
+      curry_implementation(:all?, function, enumerable)
     end
 
     # Applies a function to each element of an enumerable and
@@ -56,8 +56,8 @@ module FunRuby
     # @example Curried with placeholder
     #   curried = F::Enum.each(F._, [1, 2, 3])
     #   curried.(->(x) { puts x }) #=> [1, 2, 3]
-    def each(function = _, enumerable = _)
-      curried(:each, function, enumerable)
+    def each(function = F._, enumerable = F._)
+      curry_implementation(:each, function, enumerable)
     end
 
     # Returns a new enumerable with new values calculated
@@ -80,8 +80,8 @@ module FunRuby
     # @example Curried with placeholder
     #   curried = F::Enum.map(F._, [1, 2, 3])
     #   curried.(->(x) { x * 2 }) # => [2, 4, 6]
-    def map(function = _, enumerable = _)
-      curried(:map, function, enumerable)
+    def map(function = F._, enumerable = F._)
+      curry_implementation(:map, function, enumerable)
     end
 
     # Returns a new enumerable containing only these elements
@@ -104,8 +104,8 @@ module FunRuby
     # @example Curried with placeholder
     #   curried = F::Enum.select(F._, [1, 2, 3, 4, 5])
     #   curried.(->(x) { x % 2 == 0 }) #=> [2, 4]
-    def select(function = _, enumerable = _)
-      curried(:select, function, enumerable)
+    def select(function = F._, enumerable = F._)
+      curry_implementation(:select, function, enumerable)
     end
 
     # Returns a single item by iterating through the list, successively
@@ -150,8 +150,8 @@ module FunRuby
     #   curried = F::Enum.reduce(F._, F._, [1, 2, 3])
     #   curried.(->(acc, x) { acc + x }, 0) # => 6
     #   curried.(->(acc, x) { acc + x }).(0) # => 6
-    def reduce(function = _, accumulator = _, enumerable = _)
-      curried(:reduce, function, accumulator, enumerable)
+    def reduce(function = F._, accumulator = F._, enumerable = F._)
+      curry_implementation(:reduce, function, accumulator, enumerable)
     end
 
     private

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "core"
+require_relative "common/helpers"
 
 module FunRuby
   # Module containing methods for strings
   module String
-    include Core
+    include Common::Helpers
 
     extend self
 
@@ -28,8 +28,8 @@ module FunRuby
     # @example Curried with placeholder
     #   curried = F::String.split(F._, "1+2+3")
     #   curried.("+") #=> ["1", "2", "3"]
-    def split(splitter = _, string = _)
-      curried(:split, splitter, string)
+    def split(splitter = F._, string = F._)
+      curry_implementation(:split, splitter, string)
     end
 
     private

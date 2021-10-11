@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "core"
+require_relative "common/helpers"
 
 module FunRuby
   # Module containing methods for arrays
   module Array
-    include Core
+    include Common::Helpers
 
     extend self
 
@@ -26,8 +26,8 @@ module FunRuby
     #   curried = F::Array.size
     #   curried.([1,2,3]) # => 3
     #   curried.([]) # => 0
-    def size(array = _)
-      curried(:size, array)
+    def size(array = F._)
+      curry_implementation(:size, array)
     end
 
     private

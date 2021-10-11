@@ -34,3 +34,6 @@ Style/DocumentationMethod:
 Metrics/BlockLength:
   Exclude:
     - spec/**/*_spec.rb
+
+Style/TrailingUnderscoreVariable:
+  Enabled: false
