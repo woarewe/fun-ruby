@@ -103,7 +103,7 @@ module FunRuby
     #   curried.(F._, 2, F._).(1, 3) # => [1, 2, 3]
     #   curried.(F._, 2, F._).(1, 3) # => [1, 2, 3]
     def curry(function = F._)
-      handling_placeholders([function], &method(:_curry).curry)
+      handling_placeholders(method(:_curry).curry, [function])
     end
 
     private
@@ -120,16 +120,16 @@ module FunRuby
     end
 
     def _curry(function)
-      handling_placeholders(&function.curry)
+      handling_placeholders(function.curry)
     end
 
-    def handling_placeholders(processed_args = [], *new_args, &function)
+    def handling_placeholders(function, processed_args = [], *new_args)
       processed_args, _ = new_args.reduce([processed_args, 0], &method(:apply_arg))
       values, with_placeholders = bisect_args(processed_args)
       result = function.(*values)
       return result unless result.respond_to?(:call)
 
-      ->(*args) { handling_placeholders(with_placeholders, *args, &result) }
+      ->(*args) { handling_placeholders(result, with_placeholders, *args) }
     end
 
     def apply_arg((processed_args, shift), new_arg)
