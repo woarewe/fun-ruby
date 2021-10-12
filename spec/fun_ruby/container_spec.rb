@@ -2,7 +2,7 @@
 
 require_lib "fun_ruby/container"
 
-describe FunRuby.const_get(:Container) do
+describe FunRuby::Container do
   describe "#define" do
     it "defines a new function" do
       container = described_class.new

@@ -1,8 +1,13 @@
 # frozen_string_literal: true
+require_relative "container/mixin"
 
 module FunRuby
   # @private
   class Container
+    def self.[](*params)
+      Mixin.build(*params)
+    end
+
     # @private
     def initialize
       @storage = {}
@@ -30,6 +35,4 @@ module FunRuby
 
     attr_reader :storage, :mutex
   end
-
-  private_constant :Container
 end

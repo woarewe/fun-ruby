@@ -6,6 +6,15 @@ module FunRuby
 
   extend self
 
+  def define(&block)
+    container
+  end
+
+  def container
+    @container ||= Container.new
+  end
+
+
   # A placeholder that helps to use not positioned currying
   def _
     PLACEHOLDER
