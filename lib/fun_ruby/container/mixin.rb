@@ -15,9 +15,9 @@ module FunRuby
         resolve.(key)
       end
 
-      def self.build(*params)
+      def self.build(aliases:)
         mixin = Module.new
-        mixin.send(:define_method, :resolve) { Resolve.build(*params) }
+        mixin.send(:define_method, :resolve) { Resolve.build(aliases: aliases) }
         mixin.send(:include, self)
         mixin
       end

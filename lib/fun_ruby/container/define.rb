@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../container"
+require_relative "../container/resolve"
 
 module FunRuby
   class Container
@@ -11,12 +12,24 @@ module FunRuby
         raise TypeError, "namespaces: should be an array" unless namespaces.is_a?(::Array)
         raise TypeError, "container: should be an instance of #{Container.name}" unless container.is_a?(Container)
 
-        new(container: container, namespaces: namespaces.map(&:to_s))
+        namespaces = namespaces.map(&:to_s)
+        resolve = Resolve.build(
+          container: container,
+          aliases: (0...namespaces.size).reduce([]) do |combos, index|
+            [namespaces[0..index], *combos]
+          end
+        )
+        new(
+          container: container,
+          namespaces: namespaces,
+          resolve: resolve
+        )
       end
 
-      def initialize(container:, namespaces:)
+      def initialize(container:, namespaces:, resolve:)
         @container = container
         @namespaces = namespaces
+        @resolve = resolve
       end
 
       def namespace(namespace, &block)
@@ -29,15 +42,19 @@ module FunRuby
         instance_exec(&block)
       end
 
-      def function(key)
-        full_key = [*namespaces, key].join(NAMESPACE_SEPARATOR)
-        container.define(full_key, yield)
+      def function(key, &block)
+        if block.nil?
+          resolve.(key)
+        else
+          full_key = [*namespaces, key].join(NAMESPACE_SEPARATOR)
+          container.define(full_key, &block)
+        end
       end
       alias_method :f, :function
 
       private
 
-      attr_reader :container, :namespaces
+      attr_reader :container, :namespaces, :resolve
     end
   end
 end

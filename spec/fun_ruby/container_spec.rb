@@ -9,7 +9,7 @@ describe FunRuby::Container do
       function = ->(x, y) { x + y }
       key = "sum"
 
-      container.define(key, function)
+      container.define(key) { function }
 
       expect(container.fetch(key)).to equal(function)
     end
@@ -18,17 +18,9 @@ describe FunRuby::Container do
       container = described_class.new
       function = ->(x, y) { x + y }
       key = "sum"
-      container.define(key, function)
+      container.define(key) { function }
 
-      expect { container.define(key, function) }.to raise_error(KeyError)
-    end
-
-    it "raises error if function is not callable" do
-      container = described_class.new
-      function = Object.new
-      key = "sum"
-
-      expect { container.define(key, function) }.to raise_error(TypeError)
+      expect { container.define(key) { function } }.to raise_error(KeyError)
     end
   end
 
@@ -38,7 +30,7 @@ describe FunRuby::Container do
       function = ->(x, y) { x + y }
       key = "sum"
 
-      container.define(key, function)
+      container.define(key) { function }
 
       expect(container.fetch(key)).to equal(function)
     end

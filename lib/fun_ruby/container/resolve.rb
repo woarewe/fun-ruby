@@ -13,7 +13,7 @@ module FunRuby
             namespace[key.to_s] = nil
           end
         end
-        new(aliases: aliases, container: container)
+        new(aliases: aliases.to_a.reverse.to_h, container: container)
       end
 
       def initialize(aliases:, container:)
@@ -28,6 +28,9 @@ module FunRuby
           function = try(full_key)
           return function if function
         end
+
+        function = try(key)
+        return function if function
 
         raise KeyError, "key #{key.inspect} has not been registered"
       end

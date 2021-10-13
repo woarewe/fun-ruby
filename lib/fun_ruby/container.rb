@@ -17,24 +17,34 @@ module FunRuby
     end
 
     # @private
-    def define(full_key, function)
-      full_key = full_key.to_s
+    def define(key, &block)
+      key = key.to_s
 
-      mutex.synchronize do
-        raise KeyError, "#{full_key.inspect} is already defined" if storage.key?(full_key)
-        raise TypeError, "should respond to #call" unless function.respond_to?(:call)
+      # mutex.synchronize do
+        raise KeyError, "#{key.inspect} is already defined" if storage.key?(key)
+        raise TypeError, "block should be given" unless block_given?
 
-        storage[full_key] = function
-      end
+        storage[key] = init_meta(block)
+      # end
     end
 
     # @private
-    def fetch(full_key)
-      storage.fetch(full_key.to_s)
+    def fetch(key)
+      key = key.to_s
+      # mutex.synchronize do
+        meta = storage.fetch(key)
+        storage[key][:value] ||= meta.fetch(:definition).()
+      # end
     end
 
     private
 
+    def init_meta(definition)
+      {
+        definition: definition,
+        value: nil
+      }
+    end
     attr_reader :storage, :mutex
   end
 end
