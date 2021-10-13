@@ -4,8 +4,10 @@ require_relative "container/mixin"
 module FunRuby
   # @private
   class Container
-    def self.[](*params)
-      Mixin.build(*params)
+    NAMESPACE_SEPARATOR = "."
+
+    def self.[](*aliases)
+      Mixin.build(aliases: aliases)
     end
 
     # @private

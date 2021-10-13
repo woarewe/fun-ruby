@@ -12,7 +12,7 @@ module FunRuby
       end
 
       def f(key)
-        resolve.call(key)
+        resolve.(key)
       end
 
       def self.build(*params)

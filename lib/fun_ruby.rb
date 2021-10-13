@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "fun_ruby/container"
+require_relative "fun_ruby/container/define"
+
 # Top-level namespace
 module FunRuby
   PLACEHOLDER = Object.new.freeze
@@ -7,7 +10,7 @@ module FunRuby
   extend self
 
   def define(&block)
-    container
+    Container::Define.build(container: container).(&block)
   end
 
   def container
