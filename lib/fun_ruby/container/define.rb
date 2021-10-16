@@ -8,6 +8,7 @@ module FunRuby
     class Define
       private_class_method :new
 
+      # @private
       def self.build(container: FunRuby.container, namespaces: [])
         raise TypeError, "namespaces: should be an array" unless namespaces.is_a?(::Array)
         raise TypeError, "container: should be an instance of #{Container.name}" unless container.is_a?(Container)
@@ -26,22 +27,26 @@ module FunRuby
         )
       end
 
+      # @private
       def initialize(container:, namespaces:, resolve:)
         @container = container
         @namespaces = namespaces
         @resolve = resolve
       end
 
+      # @private
       def namespace(namespace, &block)
         self.class.build(container: container, namespaces: [*namespaces, namespace]).tap do |define|
           define.instance_exec(&block)
         end
       end
 
+      # @private
       def call(&block)
         instance_exec(&block)
       end
 
+      # @private
       def function(key, &block)
         if block.nil?
           resolve.(key)

@@ -38,6 +38,7 @@ module FunRuby
     end
 
     private
+    attr_reader :storage, :mutex
 
     def init_meta(definition)
       {
@@ -45,6 +46,5 @@ module FunRuby
         value: nil
       }
     end
-    attr_reader :storage, :mutex
   end
 end
