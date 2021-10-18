@@ -101,7 +101,7 @@ describe FunRuby::Container::Define do
     expect(container.fetch("lib.math.fun2")).to be(function)
   end
 
-  xit "defines a function using a short reference inside a namespace" do
+  it "defines a function using a short reference inside a namespace" do
     container = FunRuby::Container.new
     define = described_class.build(container: container)
     function = ->(x, y) { x + y }
@@ -116,6 +116,24 @@ describe FunRuby::Container::Define do
     end
 
     expect(container.fetch("app.math.fun1")).to be(function)
+    expect(container.fetch("app.math.fun2")).to be(function)
+  end
+
+  it "defines a function using a short reference to a parent namespace function" do
+    container = FunRuby::Container.new
+    define = described_class.build(container: container)
+    function = ->(x, y) { x + y }
+
+    define.() do
+      namespace :app do
+        f("fun1") { function }
+        namespace :math do
+          f("fun2") { f("fun1") }
+        end
+      end
+    end
+
+    expect(container.fetch("app.fun1")).to be(function)
     expect(container.fetch("app.math.fun2")).to be(function)
   end
 end

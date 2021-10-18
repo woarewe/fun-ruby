@@ -17,7 +17,7 @@ module FunRuby
         resolve = Resolve.build(
           container: container,
           aliases: (0...namespaces.size).reduce([]) do |combos, index|
-            [namespaces[0..index], *combos]
+            [namespaces[0..index].join(NAMESPACE_SEPARATOR), *combos]
           end
         )
         new(
