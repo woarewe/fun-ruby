@@ -154,6 +154,33 @@ module FunRuby
       curry_implementation(:reduce, function, accumulator, enumerable)
     end
 
+    # Goes through a given enumerable and count the amount of elements
+    # for which a passed function returned true
+    #
+    # @since 0.1.0
+    #
+    # @param function [#call/1] ->(item) { returns Boolean }
+    # @param enumerable [#to_enum]
+    #
+    # @return [Integer]
+    #
+    # @example Basic: count odd elements
+    #   F::Enum.count(->(x) { x % 2 == 1 }, [1, 2, 3]) #=> 2
+    #
+    # @example Curried: count odd elements
+    #   curried = F::Enum.count
+    #   curried.(->(x) { x % 2 == 1 }).([1, 2, 3]) #=> 2
+    #
+    # @example Curried with placeholder: count odd elements
+    #   curried = F::Enum.count(F._, [1, 2, 3])
+    #   curried.(->(x) { x % 2 == 1 }) #=> 2
+    #
+    #   curried = F::Enum.count(->(x) { x % 2 == 1 }, F._)
+    #   curried.([1, 2, 3]) #=> 2
+    def count(function = F._, enumerable = F._)
+      curry_implementation(:count, function, enumerable)
+    end
+
     private
 
     def _all?(function, enumerable)
@@ -174,6 +201,10 @@ module FunRuby
 
     def _reduce(function, accumulator, enumerable)
       _enum(enumerable).reduce(accumulator, &function)
+    end
+
+    def _count(function, enumerable)
+      _enum(enumerable).count(&function)
     end
 
     def _enum(enumerable)

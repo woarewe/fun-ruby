@@ -17,7 +17,6 @@ module FunRuby
     @container ||= Container.new
   end
 
-
   # A placeholder that helps to use not positioned currying
   def _
     PLACEHOLDER

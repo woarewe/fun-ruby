@@ -8,7 +8,7 @@ module FunRuby
       def self.build(aliases: [], container: FunRuby.container)
         aliases = aliases.each_with_object({}) do |key, namespace|
           if key.is_a?(Hash)
-            namespace.merge!(key.map { |k, v| [k, v].map(&:to_s) }.to_h )
+            namespace.merge!(key.map { |k, v| [k, v].map(&:to_s) }.to_h)
           else
             namespace[key.to_s] = nil
           end

@@ -55,7 +55,7 @@ module FunRuby
           container.define(full_key, &block)
         end
       end
-      alias_method :f, :function
+      alias f function
 
       private
 

@@ -10,7 +10,7 @@ describe FunRuby::Container::Resolve do
     container.define("key") { function }
     resolve = described_class.build(container: container)
 
-    expect(resolve.call("key")).to eq(function)
+    expect(resolve.("key")).to eq(function)
   end
 
   it "resolves a single-namespaced function" do
@@ -19,7 +19,7 @@ describe FunRuby::Container::Resolve do
     container.define("namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["namespace"])
 
-    expect(resolve.call("key")).to eq(function)
+    expect(resolve.("key")).to eq(function)
   end
 
   it "resolves a double-namespaced function" do
@@ -28,7 +28,7 @@ describe FunRuby::Container::Resolve do
     container.define("app.namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["app.namespace"])
 
-    expect(resolve.call("app.namespace.key")).to eq(function)
+    expect(resolve.("app.namespace.key")).to eq(function)
   end
 
   it "resolves a function under a fully-aliased namespace" do
@@ -37,7 +37,7 @@ describe FunRuby::Container::Resolve do
     container.define("app.namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["app.namespace" => "alias"])
 
-    expect(resolve.call("alias.key")).to eq(function)
+    expect(resolve.("alias.key")).to eq(function)
   end
 
   it "resolves a function under a partially-aliased namespace" do
@@ -46,6 +46,6 @@ describe FunRuby::Container::Resolve do
     container.define("root.app.namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["app.namespace" => "alias"])
 
-    expect(resolve.call("root.alias.key")).to eq(function)
+    expect(resolve.("root.alias.key")).to eq(function)
   end
 end
