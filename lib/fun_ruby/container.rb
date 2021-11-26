@@ -7,6 +7,7 @@ module FunRuby
   class Container
     NAMESPACE_SEPARATOR = "."
 
+    # @private
     def self.[](*aliases)
       Mixin.build(aliases: aliases)
     end

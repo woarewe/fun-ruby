@@ -5,6 +5,7 @@ require_relative "../container/resolve"
 
 module FunRuby
   class Container
+    # @private
     class Define
       private_class_method :new
 

@@ -9,10 +9,29 @@ module FunRuby
 
   extend self
 
+  # Allows to define globally available functions
+  #
+  # @since 0.1.0
+  #
+  # @return void
+  #
+  # @example Basic: defines a function
+  #
+  #   F.define do
+  #     namespace :functions do
+  #       f(:sum) { ->(x, y) { x + y } }
+  #     end
+  #   end
+  #   F.container.fetch("functions.sum").(2, 3) # => 5
   def define(&block)
     Container::Define.build(container: container).(&block)
   end
 
+  # Returns a global container
+  #
+  # @since 0.1.0
+  #
+  # @return [FunRuby::Container]
   def container
     @container ||= Container.new
   end

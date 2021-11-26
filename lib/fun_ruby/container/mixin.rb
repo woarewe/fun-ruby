@@ -4,22 +4,24 @@ require_relative "resolve"
 
 module FunRuby
   class Container
+    # @private
     module Mixin
+      # @private
       def self.build(aliases:)
         mixin = Module.new
-        mixin.send(:define_method, :resolve) { Resolve.build(aliases: aliases) }
+        mixin.send(:define_method, :_resolve) { Resolve.build(aliases: aliases) }
         mixin.send(:include, self)
         mixin
       end
 
       private
 
-      def resolve
-        @resolve ||= Resolve.build
+      def _resolve
+        @_resolve ||= Resolve.build
       end
 
       def f(key)
-        resolve.(key)
+        _resolve.(key)
       end
     end
   end
