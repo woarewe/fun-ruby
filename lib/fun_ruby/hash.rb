@@ -228,6 +228,25 @@ module FunRuby
       curry_implementation(:slice, keys, hash)
     end
 
+    # Builds a new hash with only given keys from a given hash.
+    # If keys are missed in the given hash KeyError is raised
+    #
+    # @since 0.1.0
+    #
+    # @param keys [::Array of (#hash, #eql?)]
+    # @param hash [#to_h]
+    #
+    # @return [Hash]
+    #
+    # @example Base
+    #   hash = { name: "John", age: 20, country: "USA" }
+    #
+    #   F::Hash.strict_slice([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
+    #   F::Hash.strict_slice([:address, :email], hash) # => raise KeyError, "keys not found: [:address, :email]"
+    def strict_slice(keys = F._, hash = F._)
+      curry_implementation(:strict_slice, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -252,6 +271,14 @@ module FunRuby
 
     def _slice(keys, hash)
       _hash(hash).slice(*keys)
+    end
+
+    def _strict_slice(keys, hash)
+      hash = _hash(hash)
+      missed_keys = keys - hash.keys
+      raise KeyError, "keys not found: #{missed_keys.inspect}" if missed_keys.any?
+
+      hash.slice(*keys)
     end
 
     def _hash(hash)
