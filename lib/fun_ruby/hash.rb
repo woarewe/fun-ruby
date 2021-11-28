@@ -194,6 +194,40 @@ module FunRuby
       curry_implementation(:merge, first, second)
     end
 
+    # Builds a new hash with only given keys from a given hash.
+    # If keys are missed in the given hash the corresponded key will be absent
+    # in the result hash.
+    #
+    # @since 0.1.0
+    #
+    # @param keys [::Array of (#hash, #eql?)]
+    # @param hash [#to_h]
+    #
+    # @return [Hash]
+    #
+    # @example Base
+    #   hash = { name: "John", age: 20, email: "john@gmail.com", country: "USA" }
+    #
+    #   F::Hash.slice([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
+    #   F::Hash.slice([:name, :age, :address], hash) # => { name: "John", age: 20 }
+    #
+    # @example Curried
+    #   hash = { name: "John", age: 20, email: "john@gmail.com", country: "USA" }
+    #   curried = F::Hash.slice
+    #
+    #   curried.([:name, :age, :country]).(hash) # => { name: "John", age: 20, country: "USA" }
+    #   curried.([:name, :age, :address]).(hash) # => { name: "John", age: 20 }
+    #
+    # @example Curried with placeholders
+    #   hash = { name: "John", age: 20, email: "john@gmail.com", country: "USA" }
+    #
+    #   curried = F::Hash.slice(F._, hash)
+    #   curried.([:name, :age, :country]) # => { name: "John", age: 20, country: "USA" }
+    #   curried.([:name, :age, :address]) # => { name: "John", age: 20 }
+    def slice(keys = F._, hash = F._)
+      curry_implementation(:slice, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -214,6 +248,10 @@ module FunRuby
 
     def _merge(first, second)
       _hash(first).merge(_hash(second))
+    end
+
+    def _slice(keys, hash)
+      _hash(hash).slice(*keys)
     end
 
     def _hash(hash)
