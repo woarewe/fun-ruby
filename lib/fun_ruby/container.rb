@@ -22,21 +22,17 @@ module FunRuby
     def define(key, &block)
       key = key.to_s
 
-      # mutex.synchronize do
       raise KeyError, "#{key.inspect} is already defined" if storage.key?(key)
       raise TypeError, "block should be given" unless block_given?
 
       storage[key] = init_meta(block)
-      # end
     end
 
     # @private
     def fetch(key)
       key = key.to_s
-      # mutex.synchronize do
       meta = storage.fetch(key)
       storage[key][:value] ||= meta.fetch(:definition).()
-      # end
     end
 
     private
