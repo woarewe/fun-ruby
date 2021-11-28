@@ -24,6 +24,9 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/ModuleLength:
+  Max: 200
+
 Naming/FileName:
   Exclude:
     - lib/fun-ruby.rb

@@ -353,6 +353,27 @@ module FunRuby
       curry_implementation(:reject, function, hash)
     end
 
+    # Returns a value stored by a given chain of keys.
+    # If a value of any level key of the chain is not found nil is returned.
+    #
+    # @since 0.1.0
+    #
+    # @param keys [::Array of (#hash, #eql?)]
+    # @param hash [#to_h]
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   hash = { a: { b: { c: 3 } } }
+    #   F::Hash.dig([:a], hash) # => { b: { c: 3 } }
+    #   F::Hash.dig([:a, :b], hash) # => { c: 3 }
+    #   F::Hash.dig([:a, :b, :c], hash) # => 3
+    #   F::Hash.dig([:foo], hash) # => nil
+    #   F::Hash.dig([:a, :foo], hash) # => nil
+    #   F::Hash.dig([:a, :b, :foo], hash) # => nil
+    def dig(keys = F._, hash = F._)
+      curry_implementation(:dig, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -418,6 +439,10 @@ module FunRuby
 
     def _reject(function, hash)
       _hash(hash).reject(&function)
+    end
+
+    def _dig(keys, hash)
+      _hash(hash).dig(*keys)
     end
 
     def _hash(hash)
