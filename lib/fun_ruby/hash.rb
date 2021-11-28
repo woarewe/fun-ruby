@@ -301,6 +301,22 @@ module FunRuby
       curry_implementation(:values, hash)
     end
 
+    # Returns an array of all stored keys
+    #
+    # @since 0.1.0
+    #
+    # @param hash [#to_h]
+    #
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   F::Hash.values({}) # => []
+    #   F::Hash.values({ age: 33 }) # => [:age]
+    #   F::Hash.values({ age: 33, name: "John"}) # => [:age, :name]
+    def keys(hash = F._)
+      curry_implementation(:keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -354,6 +370,10 @@ module FunRuby
 
     def _values(hash)
       _hash(hash).values
+    end
+
+    def _keys(hash)
+      _hash(hash).keys
     end
 
     def _hash(hash)
