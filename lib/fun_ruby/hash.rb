@@ -408,6 +408,21 @@ module FunRuby
       curry_implementation(:compact, keys, hash)
     end
 
+    # Returns a new hash with updated keys calculated
+    # as a result returned from a given function
+    #
+    # @since 0.1.0
+    #
+    # @param function [#call/1]
+    # @param hash [#to_h]
+    #
+    # @example Base
+    #   hash = { a: 1, b: 2, c: 3 }
+    #   F::Hash.transform_keys(->(key) { key.to_s }, hash) #=> { 'a' => 1, 'b' => 2, 'c' => 3 }
+    def transform_keys(function = F._, hash = F._)
+      curry_implementation(:transform_keys, function, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -491,6 +506,20 @@ module FunRuby
     else
       def _compact(hash)
         _hash(hash).reject { |_key, value| value.nil? }
+      end
+    end
+
+    if RUBY_VERSION >= "2.5"
+      def _transform_keys(function, hash)
+        _hash(hash).transform_keys(&function)
+      end
+    else
+      def _transform_keys(function, hash)
+        hash = _hash(hash)
+        hash.each_with_object({}) do |(key, value), new_hash|
+          new_key = function.(key)
+          new_hash[new_key] = value
+        end
       end
     end
 
