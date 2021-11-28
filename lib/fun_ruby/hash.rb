@@ -395,6 +395,19 @@ module FunRuby
       curry_implementation(:dig!, keys, hash)
     end
 
+    # Returns a new hash without all key-valued pairs
+    #
+    # @since 0.1.0
+    #
+    # @param hash [#to_h]
+    #
+    # @example Base
+    #   hash = { name: "John", age: 18, email: nil, country: nil }
+    #   F::Hash.compact(hash) # => { name: "John", age: 18 }
+    def compact(keys = F._, hash = F._)
+      curry_implementation(:compact, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -469,6 +482,16 @@ module FunRuby
     def _dig!(keys, hash)
       hash = _hash(hash)
       keys.reduce(hash) { |current, key| current.fetch(key) }
+    end
+
+    if RUBY_VERSION >= "2.4"
+      def _compact(hash)
+        _hash(hash).compact
+      end
+    else
+      def _compact(hash)
+        _hash(hash).reject { |_key, value| value.nil? }
+      end
     end
 
     def _hash(hash)
