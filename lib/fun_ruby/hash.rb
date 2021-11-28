@@ -335,6 +335,24 @@ module FunRuby
       curry_implementation(:select, function, hash)
     end
 
+    # Returns a new hash excluding pairs
+    # for which a given function returns true
+    #
+    # @since 0.1.0
+    #
+    # @param function [#call/2]
+    # @param hash [#to_h]
+    #
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   hash = { 'a' => 1, 'b' => 2, :c => 3, :d => 4 }
+    #   F::Hash.reject(->(key, _value) { key.is_a?(String) }, hash) # => { :c => 3, :d => 4 }
+    #   F::Hash.reject(->(_key, value) { value.odd? }, hash) # => { 'b' => 2, :d =>4 }
+    def reject(function = F._, hash = F._)
+      curry_implementation(:reject, function, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -396,6 +414,10 @@ module FunRuby
 
     def _select(function, hash)
       _hash(hash).select(&function)
+    end
+
+    def _reject(function, hash)
+      _hash(hash).reject(&function)
     end
 
     def _hash(hash)
