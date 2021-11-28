@@ -423,6 +423,21 @@ module FunRuby
       curry_implementation(:transform_keys, function, hash)
     end
 
+    # Returns a new hash with updated values calculated
+    # as a result returned from a given function
+    #
+    # @since 0.1.0
+    #
+    # @param function [#call/1]
+    # @param hash [#to_h]
+    #
+    # @example Base
+    #   hash = { a: 1, b: 2, c: 3 }
+    #   F::Hash.transform_values(->(value) { value.to_s }, hash) #=> { a: '1', b: '2', c: '3' }
+    def transform_values(function = F._, hash = F._)
+      curry_implementation(:transform_values, function, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -519,6 +534,20 @@ module FunRuby
         hash.each_with_object({}) do |(key, value), new_hash|
           new_key = function.(key)
           new_hash[new_key] = value
+        end
+      end
+    end
+
+    if RUBY_VERSION >= "2.4"
+      def _transform_values(function, hash)
+        _hash(hash).transform_values(&function)
+      end
+    else
+      def _transform_values(function, hash)
+        hash = _hash(hash)
+        hash.each_with_object({}) do |(key, value), new_hash|
+          new_value = function.(value)
+          new_hash[key] = new_value
         end
       end
     end
