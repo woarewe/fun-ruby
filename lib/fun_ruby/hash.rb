@@ -266,6 +266,25 @@ module FunRuby
       curry_implementation(:fetch_values, keys, hash)
     end
 
+    # Returns an array of values stored by given keys
+    # If a key is missed the default value is returned
+    #
+    # @since 0.1.0
+    #
+    # @param keys [::Array of (#hash, #eql?)]
+    # @param hash [#to_h]
+    #
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   hash = { name: "John", age: 20, country: "USA" }
+    #
+    #   F::Hash.values_at([:name, :age, :country], hash) # => ["John", 20, "USA"]
+    #   F::Hash.values_at([:address, :email, :country, :age], hash) # => [nil, nil, "USA", 20]
+    def values_at(keys = F._, hash = F._)
+      curry_implementation(:values_at, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -311,6 +330,10 @@ module FunRuby
 
     def _fetch_values(keys, hash)
       _hash(hash).fetch_values(*keys)
+    end
+
+    def _values_at(keys, hash)
+      _hash(hash).values_at(*keys)
     end
 
     def _hash(hash)
