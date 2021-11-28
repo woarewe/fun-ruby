@@ -247,6 +247,25 @@ module FunRuby
       curry_implementation(:fetch_slice, keys, hash)
     end
 
+    # Returns an array of values stored by given keys
+    # If any key is missed in the given hash KeyError is raised with the first missed key
+    #
+    # @since 0.1.0
+    #
+    # @param keys [::Array of (#hash, #eql?)]
+    # @param hash [#to_h]
+    #
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   hash = { name: "John", age: 20, country: "USA" }
+    #
+    #   F::Hash.fetch_values([:name, :age, :country], hash) # => ["John", 20, "USA"]
+    #   F::Hash.fetch_values([:address, :email], hash) # => raise KeyError, "key not found: :address"
+    def fetch_values(keys = F._, hash = F._)
+      curry_implementation(:fetch_values, keys, hash)
+    end
+
     private
 
     def _get(key, hash)
@@ -288,6 +307,10 @@ module FunRuby
       raise KeyError, "keys not found: #{missed_keys.inspect}" if missed_keys.any?
 
       _slice(keys, hash)
+    end
+
+    def _fetch_values(keys, hash)
+      _hash(hash).fetch_values(*keys)
     end
 
     def _hash(hash)
