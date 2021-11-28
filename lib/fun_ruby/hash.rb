@@ -310,11 +310,29 @@ module FunRuby
     # @return [::Array[Object]]
     #
     # @example Base
-    #   F::Hash.values({}) # => []
-    #   F::Hash.values({ age: 33 }) # => [:age]
-    #   F::Hash.values({ age: 33, name: "John"}) # => [:age, :name]
+    #   F::Hash.keys({}) # => []
+    #   F::Hash.keys({ age: 33 }) # => [:age]
+    #   F::Hash.keys({ age: 33, name: "John"}) # => [:age, :name]
     def keys(hash = F._)
       curry_implementation(:keys, hash)
+    end
+
+    # Returns a new hash containing only pairs
+    # for which a given function returns true
+    #
+    # @since 0.1.0
+    #
+    # @param function [#call/2]
+    # @param hash [#to_h]
+    #
+    # @return [::Array[Object]]
+    #
+    # @example Base
+    #   hash = { 'a' => 1, 'b' => 2, :c => 3, :d => 4 }
+    #   F::Hash.select(->(key, _value) { key.is_a?(String) }, hash) # => { 'a' => 1, 'b' => 2 }
+    #   F::Hash.select(->(_key, value) { value.odd? }, hash) # => { 'a' => 1, :c => 3 }
+    def select(function = F._, hash = F._)
+      curry_implementation(:select, function, hash)
     end
 
     private
@@ -374,6 +392,10 @@ module FunRuby
 
     def _keys(hash)
       _hash(hash).keys
+    end
+
+    def _select(function, hash)
+      _hash(hash).select(&function)
     end
 
     def _hash(hash)
