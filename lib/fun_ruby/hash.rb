@@ -241,10 +241,10 @@ module FunRuby
     # @example Base
     #   hash = { name: "John", age: 20, country: "USA" }
     #
-    #   F::Hash.fetch_slice([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
-    #   F::Hash.fetch_slice([:address, :email], hash) # => raise KeyError, "keys not found: [:address, :email]"
-    def fetch_slice(keys = F._, hash = F._)
-      curry_implementation(:fetch_slice, keys, hash)
+    #   F::Hash.slice!([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
+    #   F::Hash.slice!([:address, :email], hash) # => raise KeyError, "keys not found: [:address, :email]"
+    def slice!(keys = F._, hash = F._)
+      curry_implementation(:slice!, keys, hash)
     end
 
     # Returns an array of values stored by given keys
@@ -388,7 +388,7 @@ module FunRuby
       end
     end
 
-    def _fetch_slice(keys, hash)
+    def _slice!(keys, hash)
       hash = _hash(hash)
       missed_keys = keys - hash.keys
       raise KeyError, "keys not found: #{missed_keys.inspect}" if missed_keys.any?
