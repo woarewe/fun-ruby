@@ -18,28 +18,24 @@ module FunRuby
     # @return [Object]
     #
     # @example Base
-    #
     #   hash = { age: 20, name: 'John' }
     #   F::Hash.get(:age, hash) # => 20
     #   F::Hash.get(:name, hash) # => 'John'
     #   F::Hash.get(:email, hash) # => nil
     #
     # @example Curried
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.get
     #   curried.(:age, hash) # => 20
     #   curried.(:name).(hash) # => 'John'
     #
     # @example Curried
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.get
     #   curried.(:age, hash) # => 20
     #   curried.(:name).(hash) # => 'John'
     #
     # @example Curried with placeholders
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.get(F._, hash)
     #   curried.(:age) # => 20
@@ -61,14 +57,12 @@ module FunRuby
     # @raise KeyError
     #
     # @example Base
-    #
     #   hash = { age: 20, name: 'John' }
     #   F::Hash.fetch(:age, hash) # => 20
     #   F::Hash.fetch(:name, hash) # => 'John'
     #   F::Hash.fetch(:email, hash) # => raise KeyError, "key not found: :email"
     #
     # @example Curried
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.fetch
     #   curried.(:age, hash) # => 20
@@ -76,7 +70,6 @@ module FunRuby
     #   curried.(:email).(hash) # => raise KeyError, "key not found: :email"
     #
     # @example Curried with placeholders
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.fetch(F._, hash)
     #   curried.(:age) # => 20
@@ -97,14 +90,12 @@ module FunRuby
     # @return [Object]
     #
     # @example Base
-    #
     #   hash = { age: 20, name: 'John' }
     #   F::Hash.fetch_with(:age, ->(_) { :fallback }, hash) # => 20
     #   F::Hash.fetch_with(:name, ->(_) { :fallback }, hash) # => 'John'
     #   F::Hash.fetch_with(:email, ->(_) { :fallback }, hash) # => :fallback
     #
     # @example Curried
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.fetch_with
     #   curried.(:age, ->(_) { :fallback }, hash) # => 20
@@ -112,7 +103,6 @@ module FunRuby
     #   curried.(:email).(->(_) { :fallback }).(hash) # => :fallback
     #
     # @example Curried with placeholders
-    #
     #   hash = { age: 20, name: 'John' }
     #   curried = F::Hash.fetch_with(F._, F._, F._)
     #   curried.(:age).(->(_) { :fallback }).(hash) # => 20
@@ -136,20 +126,17 @@ module FunRuby
     # @return [Hash]
     #
     # @example Base
-    #
     #   hash = { name: "John" }
     #   F::Hash.put(:age, 20, hash) # => { name: "John", age: 20 }
     #   F::Hash.put(:name, "Peter", hash) # => { name: "Peter" }
     #
     # @example Curried
-    #
     #   hash = { name: "John" }
     #   curried = F::Hash.put
     #   curried.(:age).(20).(hash) # => { name: "John", age: 20 }
     #   curried.(:name).("Peter").(hash) # => { name: "Peter" }
     #
     # @example Curried with placeholders
-    #
     #   hash = { name: "John" }
     #   curried = F::Hash.put(F._, 20, hash)
     #   curried.(:age) # => { name: "John", age: 20 }
@@ -174,7 +161,6 @@ module FunRuby
     # @return [Hash]
     #
     # @example Base
-    #
     #   first = { name: "John" }
     #   second = { age: 20 }
     #   F::Hash.merge(first, second) # => { name: "John", age: 20 }
@@ -184,7 +170,6 @@ module FunRuby
     #   F::Hash.merge(first, second) # => { name: "Bill", age: 20 }
     #
     # @example Curried
-    #
     #   first = { name: "John" }
     #   second = { age: 20 }
     #   curried = F::Hash.merge
@@ -196,7 +181,6 @@ module FunRuby
     #   curried.(first).(second) # => { name: "Bill", age: 20 }
     #
     # @example Curried with placeholders
-    #
     #   first = { name: "John" }
     #   second = { age: 20 }
     #   curried = F::Hash.merge(F._, F._)

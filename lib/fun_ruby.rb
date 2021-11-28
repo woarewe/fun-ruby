@@ -16,7 +16,6 @@ module FunRuby
   # @return void
   #
   # @example Basic: defines a function
-  #
   #   F.define do
   #     namespace :functions do
   #       f(:sum) { ->(x, y) { x + y } }
