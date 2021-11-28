@@ -269,8 +269,17 @@ module FunRuby
       _hash(first).merge(_hash(second))
     end
 
-    def _slice(keys, hash)
-      _hash(hash).slice(*keys)
+    if RUBY_VERSION >= "2.5"
+      def _slice(keys, hash)
+        _hash(hash).slice(*keys)
+      end
+    else
+      def _slice(keys, hash)
+        hash = _hash(hash)
+        keys.each_with_object({}) do |key, new_hash|
+          new_hash[key] = hash[key] if hash.key?(key)
+        end
+      end
     end
 
     def _strict_slice(keys, hash)
@@ -278,7 +287,7 @@ module FunRuby
       missed_keys = keys - hash.keys
       raise KeyError, "keys not found: #{missed_keys.inspect}" if missed_keys.any?
 
-      hash.slice(*keys)
+      _slice(keys, hash)
     end
 
     def _hash(hash)
