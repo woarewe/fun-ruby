@@ -241,10 +241,10 @@ module FunRuby
     # @example Base
     #   hash = { name: "John", age: 20, country: "USA" }
     #
-    #   F::Hash.strict_slice([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
-    #   F::Hash.strict_slice([:address, :email], hash) # => raise KeyError, "keys not found: [:address, :email]"
-    def strict_slice(keys = F._, hash = F._)
-      curry_implementation(:strict_slice, keys, hash)
+    #   F::Hash.fetch_slice([:name, :age, :country], hash) # => { name: "John", age: 20, country: "USA" }
+    #   F::Hash.fetch_slice([:address, :email], hash) # => raise KeyError, "keys not found: [:address, :email]"
+    def fetch_slice(keys = F._, hash = F._)
+      curry_implementation(:fetch_slice, keys, hash)
     end
 
     private
@@ -282,7 +282,7 @@ module FunRuby
       end
     end
 
-    def _strict_slice(keys, hash)
+    def _fetch_slice(keys, hash)
       hash = _hash(hash)
       missed_keys = keys - hash.keys
       raise KeyError, "keys not found: #{missed_keys.inspect}" if missed_keys.any?
