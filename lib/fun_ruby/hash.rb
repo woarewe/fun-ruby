@@ -125,7 +125,7 @@ module FunRuby
     end
 
     # Puts a value by a given key.
-    # If the key is already taken the value will be replaced.
+    # If the key is already taken the current value will be replaced.
     #
     # @since 0.1.0
     #
@@ -163,6 +163,53 @@ module FunRuby
       curry_implementation(:put, key, value, hash)
     end
 
+    # Merges two hashes. The key-value pairs from the second to the first.
+    # If the key is already taken the current value will be replaced.
+    #
+    # @since 0.1.0
+    #
+    # @param first [#to_h]
+    # @param second [#to_h]
+    #
+    # @return [Hash]
+    #
+    # @example Base
+    #
+    #   first = { name: "John" }
+    #   second = { age: 20 }
+    #   F::Hash.merge(first, second) # => { name: "John", age: 20 }
+    #
+    #   first = { name: "John" }
+    #   second = { name: "Bill", age: 20 }
+    #   F::Hash.merge(first, second) # => { name: "Bill", age: 20 }
+    #
+    # @example Curried
+    #
+    #   first = { name: "John" }
+    #   second = { age: 20 }
+    #   curried = F::Hash.merge
+    #   curried.(first).(second) # => { name: "John", age: 20 }
+    #
+    #   first = { name: "John" }
+    #   second = { name: "Bill", age: 20 }
+    #   curried = F::Hash.merge
+    #   curried.(first).(second) # => { name: "Bill", age: 20 }
+    #
+    # @example Curried with placeholders
+    #
+    #   first = { name: "John" }
+    #   second = { age: 20 }
+    #   curried = F::Hash.merge(F._, F._)
+    #   curried.(first).(second) # => { name: "John", age: 20 }
+    #
+    #   first = { name: "John" }
+    #   second = { name: "Bill", age: 20 }
+    #   curried = F::Hash.merge(F._, second)
+    #   curried.(first) # => { name: "Bill", age: 20 }
+    def merge(first = F._, second = F._)
+      curry_implementation(:merge, first, second)
+    end
+
     private
 
     def _get(key, hash)
@@ -179,6 +226,10 @@ module FunRuby
 
     def _put(key, value, hash)
       _hash(hash).merge(key => value)
+    end
+
+    def _merge(first, second)
+      _hash(first).merge(_hash(second))
     end
 
     def _hash(hash)
