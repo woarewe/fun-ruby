@@ -30,10 +30,30 @@ module FunRuby
       curry_implementation(:size, array)
     end
 
+    # Returns a string built from elements joined by a given string
+    #
+    # @since 0.1.0
+    #
+    # @param string [String]
+    # @param array [::Array]
+    #
+    # @return [String]
+    #
+    # @example Basics
+    #   ary = [1, 2, 3]
+    #   F::Array.join("+", ary) # => "1+2+3"
+    def join(string = F._, array = F._)
+      curry_implementation(:join, string, array)
+    end
+
     private
 
     def _size(array)
       _array(array).size
+    end
+
+    def _join(string, array)
+      _array(array).join(string)
     end
 
     def _array(array)
