@@ -29,23 +29,19 @@ module FunRuby
         key = key.to_s
         aliases.each do |(namespace, shortcut)|
           full_key = shortcut.nil? ? [namespace, key].join(NAMESPACE_SEPARATOR) : key.gsub(shortcut, namespace)
-          function = try(full_key)
-          return function if function
+          begin
+            return container.fetch(full_key)
+          rescue KeyError
+            next
+          end
         end
 
-        function = try(key)
-        return function if function
-
-        raise KeyError, "key #{key.inspect} has not been registered"
+        container.fetch(key) do
+          raise KeyError, "key #{key.inspect} has not been registered"
+        end
       end
 
       private
-
-      def try(full_key)
-        container.fetch(full_key)
-      rescue KeyError
-        nil
-      end
 
       attr_reader :aliases, :container
     end

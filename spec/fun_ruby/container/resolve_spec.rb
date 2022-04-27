@@ -48,4 +48,12 @@ describe FunRuby::Container::Resolve do
 
     expect(resolve.("root.alias.key")).to eq(function)
   end
+
+  it "is able to resolve nils" do
+    container = FunRuby::Container.new
+    container.define("key") { nil }
+    resolve = described_class.build(container: container)
+
+    expect(resolve.("key")).to be(nil)
+  end
 end
