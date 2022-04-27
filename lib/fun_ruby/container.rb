@@ -9,11 +9,6 @@ module FunRuby
     NOT_EVALUATED = Object.new.freeze
 
     # @private
-    def self.[](*aliases)
-      Mixin.build(aliases: aliases)
-    end
-
-    # @private
     def initialize
       @storage = {}
       @mutex = Mutex.new
@@ -39,6 +34,11 @@ module FunRuby
       meta.fetch(:definition).().tap do |evaluated|
         storage[key][:value] = evaluated
       end
+    end
+
+    # @private
+    def mixin(*aliases)
+      Mixin.build(aliases: aliases)
     end
 
     private

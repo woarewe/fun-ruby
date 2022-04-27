@@ -35,6 +35,15 @@ module FunRuby
     @container ||= Container.new
   end
 
+  # Return a global container mixin
+  #
+  # @since 0.1.0
+  #
+  # @return [FunRuby::Container::Mixin]
+  def mixin(*aliases)
+    container.mixin(*aliases)
+  end
+
   # A placeholder that helps to use not positioned currying
   def _
     PLACEHOLDER
