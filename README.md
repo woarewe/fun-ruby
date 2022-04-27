@@ -1,4 +1,4 @@
-# *Fun*ctional Ruby
+# *Fun*ctional Ruby 🚀
 
 ![Alt Text](assets/fun.gif)
 
