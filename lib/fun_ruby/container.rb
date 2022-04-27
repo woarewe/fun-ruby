@@ -6,6 +6,7 @@ module FunRuby
   # @private
   class Container
     NAMESPACE_SEPARATOR = "."
+    NOT_EVALUATED = Object.new.freeze
 
     # @private
     def self.[](*aliases)
@@ -32,7 +33,12 @@ module FunRuby
     def fetch(key)
       key = key.to_s
       meta = storage.fetch(key)
-      storage[key][:value] ||= meta.fetch(:definition).()
+      value = storage[key].fetch(:value)
+      return value unless value.equal?(NOT_EVALUATED)
+
+      meta.fetch(:definition).().tap do |evaluated|
+        storage[key][:value] = evaluated
+      end
     end
 
     private
@@ -42,7 +48,7 @@ module FunRuby
     def init_meta(definition)
       {
         definition: definition,
-        value: nil
+        value: NOT_EVALUATED
       }
     end
   end
