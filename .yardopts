@@ -1,4 +1,3 @@
---title 'dry-types'
 --query '@api.text != "private"'
 --embed-mixins
 --output doc
