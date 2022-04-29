@@ -37,7 +37,7 @@ module FunRuby
     end
 
     # @private
-    def mixin(*aliases)
+    def import(*aliases)
       Mixin.build(aliases: aliases)
     end
 

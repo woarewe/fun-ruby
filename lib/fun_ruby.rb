@@ -35,13 +35,47 @@ module FunRuby
     @container ||= Container.new
   end
 
-  # Return a global container mixin
+  # Allows to import global container to your classes and modules
   #
   # @since 0.1.0
   #
   # @return [FunRuby::Container::Mixin]
-  def mixin(*aliases)
-    container.mixin(*aliases)
+  #
+  # @example
+  #   F.define do
+  #     namespace :app do
+  #       namespace :string do
+  #         f(:to_s) { ->(x) { x.to_s } }
+  #         f(:map) { F::Enum.map(f(:to_s)) }
+  #       end
+  #
+  #       namespace :math do
+  #         f(:x2) { ->(x) { x * 2 } }
+  #         f(:map) { F::Enum.map(f(:x2)) }
+  #       end
+  #     end
+  #   end
+  #
+  #   class Service
+  #     include F.import(
+  #       "app.string" => "s",
+  #       "app.math" => "m"
+  #     )
+  #
+  #     def s_map(ary)
+  #       f("s.map").(ary)
+  #     end
+  #
+  #     def m_map(ary)
+  #       f("m.map").(ary)
+  #     end
+  #   end
+  #
+  #   ary = [1, 2, 3]
+  #   Service.new.s_map(ary) #=> ["1", "2", "3"]
+  #   Service.new.m_map(ary) #=> [2, 4, 6]
+  def import(*aliases)
+    container.import(*aliases)
   end
 
   # A placeholder that helps to use not positioned currying
