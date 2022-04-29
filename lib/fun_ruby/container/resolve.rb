@@ -8,14 +8,14 @@ module FunRuby
 
       # @private
       def self.build(aliases: [], container: FunRuby.container)
-        aliases = aliases.each_with_object({}) do |key, namespace|
-          if key.is_a?(Hash)
+        formatted = aliases.each_with_object({}) do |key, namespace|
+          if key.is_a?(::Hash)
             namespace.merge!(key.map { |k, v| [k, v].map(&:to_s) }.to_h)
           else
             namespace[key.to_s] = nil
           end
         end
-        new(aliases: aliases.to_a.reverse.to_h, container: container)
+        new(aliases: formatted.to_a.reverse.to_h, container: container)
       end
 
       # @private
@@ -28,7 +28,7 @@ module FunRuby
       def call(key)
         key = key.to_s
         aliases.each do |(namespace, shortcut)|
-          full_key = shortcut.nil? ? [namespace, key].join(NAMESPACE_SEPARATOR) : key.gsub(shortcut, namespace)
+          full_key = build_full_key(namespace, shortcut, key)
           begin
             return container.fetch(full_key)
           rescue KeyError
@@ -42,6 +42,14 @@ module FunRuby
       end
 
       private
+
+      def build_full_key(namespace, shortcut, key)
+        if shortcut.nil?
+          [namespace, key].join(NAMESPACE_SEPARATOR)
+        else
+          key.gsub(/(?<=\A|\.)#{shortcut}(?=\z|\.)/, namespace)
+        end
+      end
 
       attr_reader :aliases, :container
     end

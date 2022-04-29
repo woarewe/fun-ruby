@@ -37,7 +37,7 @@ describe FunRuby::Container::Resolve do
     container.define("app.namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["app.namespace" => "alias"])
 
-    expect(resolve.("alias.key")).to eq(function)
+    expect(resolve.("alias.key")).to be(function)
   end
 
   it "resolves a function under a partially-aliased namespace" do
@@ -46,7 +46,7 @@ describe FunRuby::Container::Resolve do
     container.define("root.app.namespace.key") { function }
     resolve = described_class.build(container: container, aliases: ["app.namespace" => "alias"])
 
-    expect(resolve.("root.alias.key")).to eq(function)
+    expect(resolve.("root.alias.key")).to be(function)
   end
 
   it "is able to resolve nils" do
@@ -55,5 +55,32 @@ describe FunRuby::Container::Resolve do
     resolve = described_class.build(container: container)
 
     expect(resolve.("key")).to be(nil)
+  end
+
+  it "resolves an alias in the beginning" do
+    function = ->(x, y) { x + y }
+    container = FunRuby::Container.new
+    container.define("app.math.map") { function }
+    resolve = described_class.build(container: container, aliases: ["app.math" => "m"])
+
+    expect(resolve.("m.map")).to be(function)
+  end
+
+  it "resolves an alias in the middle" do
+    function = ->(x, y) { x + y }
+    container = FunRuby::Container.new
+    container.define("core.app.math.map") { function }
+    resolve = described_class.build(container: container, aliases: ["app.math" => "m"])
+
+    expect(resolve.("core.m.map")).to be(function)
+  end
+
+  it "resolves an alias in the end" do
+    function = ->(x, y) { x + y }
+    container = FunRuby::Container.new
+    container.define("core.app.math") { function }
+    resolve = described_class.build(container: container, aliases: ["app.math" => "m"])
+
+    expect(resolve.("core.m")).to be(function)
   end
 end
