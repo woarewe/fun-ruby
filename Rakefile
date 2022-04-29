@@ -9,4 +9,8 @@ require "rubocop/rake_task"
 
 RuboCop::RakeTask.new
 
-task default: %i[spec rubocop]
+task :doctest do
+  sh "bin/yard doctest"
+end
+
+task default: %i[spec doctest rubocop]
