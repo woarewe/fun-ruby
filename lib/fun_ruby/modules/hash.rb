@@ -3,7 +3,8 @@
 module FunRuby
   module Modules
     # Module containing methods for hashes
-    module Hash
+    # TODO: Split the file into smaller chunks
+    module Hash # rubocop:disable Metrics/ModuleLength
       include Common::Helpers
 
       extend self
