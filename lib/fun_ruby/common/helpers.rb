@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../fun_ruby"
-require_relative "../function"
+require_relative "../modules/function"
 
 module FunRuby
   module Common
@@ -10,7 +10,7 @@ module FunRuby
       private
 
       def curry_implementation(method_name, *args)
-        F::Function.curry(method("_#{method_name}")).(*args)
+        F::Modules::Function.curry(method("_#{method_name}")).(*args)
       end
     end
   end

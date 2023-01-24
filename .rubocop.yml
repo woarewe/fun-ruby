@@ -24,15 +24,17 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 20
 
-Metrics/ModuleLength:
-  Max: 200
-
 Naming/FileName:
   Exclude:
     - lib/fun-ruby.rb
 
 Style/DocumentationMethod:
   Enabled: true
+
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - lib/fun_ruby/array/*.rb
 
 Metrics/BlockLength:
   Exclude:

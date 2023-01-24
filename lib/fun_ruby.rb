@@ -46,12 +46,12 @@ module FunRuby
   #     namespace :app do
   #       namespace :string do
   #         f(:to_s) { ->(x) { x.to_s } }
-  #         f(:map) { F::Enum.map(f(:to_s)) }
+  #         f(:map) { F::Modules::Enum.map(f(:to_s)) }
   #       end
   #
   #       namespace :math do
   #         f(:x2) { ->(x) { x * 2 } }
-  #         f(:map) { F::Enum.map(f(:x2)) }
+  #         f(:map) { F::Modules::Enum.map(f(:x2)) }
   #       end
   #     end
   #   end
