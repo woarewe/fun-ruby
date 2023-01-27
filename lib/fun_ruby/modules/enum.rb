@@ -46,15 +46,15 @@ module FunRuby
       # @return [::Array] the passed enumerable
       #
       # @example Basic
-      #   F::Modules::Enum.each(->(x) { puts x }, [1, 2, 3]) #=> [1, 2, 3]
+      #   F::Modules::Enum.each(->(x) { x }, [1, 2, 3]) #=> [1, 2, 3]
       #
       # @example Curried
       #   curried = F::Modules::Enum.each
-      #   curried.(->(x) { puts x }).([1, 2, 3]) #=> [1, 2, 3]
+      #   curried.(->(x) { x }).([1, 2, 3]) #=> [1, 2, 3]
       #
       # @example Curried with placeholder
       #   curried = F::Modules::Enum.each(F._, [1, 2, 3])
-      #   curried.(->(x) { puts x }) #=> [1, 2, 3]
+      #   curried.(->(x) { x }) #=> [1, 2, 3]
       def each(function = F._, enumerable = F._)
         curry_implementation(:each, function, enumerable)
       end

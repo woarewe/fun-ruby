@@ -12,7 +12,7 @@ module FunRuby
       # @since 0.1.0
       #
       # @param required [#call]
-      # @param *functions [#call]
+      # @param functions [#call]
       #
       # @return [#call]
       #
@@ -53,7 +53,7 @@ module FunRuby
       # @since 0.1.0
       #
       # @param required [#call]
-      # @param *functions [#call]
+      # @param functions [#call]
       #
       # @return [#call]
       #
