@@ -30,7 +30,7 @@ module Tooling
       def file_path(module_name)
         file_name = "#{module_name.underscore}.rb"
         full_path = File.expand_path(file_name, Config::MODULES_DIR)
-        raise "The module #{module_name.camelize} already exists" if File.exists?(full_path)
+        raise "The module FunRuby::Modules::#{module_name.camelize} already exists" if File.exists?(full_path)
 
         full_path
       end
@@ -41,7 +41,10 @@ module Tooling
 
       def require_module(module_name)
         content = File.read(Config::MODULES_FILE).strip
-        content << %Q(require_relative "modules/#{module_name.underscore}"\n\n)
+        content << <<~RUBY
+
+          require_relative "modules/#{module_name.underscore}"
+        RUBY
         File.open(Config::MODULES_FILE, "w") { |f| f.write(content) }
       end
 
