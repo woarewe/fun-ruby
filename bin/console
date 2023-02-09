@@ -13,4 +13,8 @@ require "irb"
 
 require_relative "../lib/fun-ruby"
 
+require_relative "../tooling/generators/module"
+
+Tooling::Generators::Module.("lol")
+
 IRB.start(__FILE__)

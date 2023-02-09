@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.3.8
+  Exclude:
+    - tooling/**/*.rb
 
 Style/StringLiterals:
   Enabled: true

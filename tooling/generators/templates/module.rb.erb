@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+module FunRuby
+  module Modules
+    # TODO: Provide module documentation
+    module <%= camelized_name  %>
+      include Common::Helpers
+
+      extend self
+
+      private
+
+      def _<%= underscored_name %>(<%= underscored_name %>)
+        # TODO: This method should coerce a passed value to module instances
+        # TODO: Delete this code if not needed
+      end
+    end
+  end
+end
