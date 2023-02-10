@@ -22,15 +22,6 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "activesupport"
-  spec.add_development_dependency "awesome_print", "~> 1.9.2"
-  spec.add_development_dependency "dry-cli"
-  spec.add_development_dependency "rake", "~> 13.0.6"
-  spec.add_development_dependency "rspec", "~> 3.10.0"
-  spec.add_development_dependency "rubocop", "~> 0.81.0"
-  spec.add_development_dependency "yard", "~> 0.9.26"
-  spec.add_development_dependency "yard-doctest", "~> 0.1.17"
-
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
 end
