@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+  BUNDLE_WITHOUT: development
+  
 jobs:
   ci:
     runs-on: ubuntu-latest
