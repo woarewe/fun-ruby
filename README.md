@@ -4,6 +4,19 @@ An experimental toolbox for writing "functional" Ruby.
 
 ![Alt Text](assets/fun.gif)
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'fun-ruby', github: 'woarewe/fun-ruby'
+```
+
+And then execute:
+```shell 
+bundle install
+```
+
 ## Motivation
 
 In 2020 I started looking into functional programming and got really
@@ -249,24 +262,6 @@ API Docs.
 **In progress...**
 
 The library is aimed to cover most of th methods the core ruby classes have.
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'fun-ruby'
-```
-
-And then execute:
-```shell 
-bundle install
-```
-
-Or install it yourself as:
-```shell
-gem install fun-ruby
-```
 
 ## Useful resources to dive into functional programming
 
