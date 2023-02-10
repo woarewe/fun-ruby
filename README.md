@@ -9,7 +9,7 @@ An experimental toolbox for writing "functional" Ruby.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'fun-ruby', github: 'woarewe/fun-ruby'
+gem 'fun-ruby', github: 'woarewe/fun-ruby', branch: 'main'
 ```
 
 And then execute:
