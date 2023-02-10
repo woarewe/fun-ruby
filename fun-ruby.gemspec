@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "activesupport"
   spec.add_development_dependency "awesome_print", "~> 1.9.2"
+  spec.add_development_dependency "dry-cli"
   spec.add_development_dependency "rake", "~> 13.0.6"
   spec.add_development_dependency "rspec", "~> 3.10.0"
   spec.add_development_dependency "rubocop", "~> 0.81.0"

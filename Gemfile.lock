@@ -16,6 +16,7 @@ GEM
     awesome_print (1.9.2)
     concurrent-ruby (1.1.9)
     diff-lcs (1.4.4)
+    dry-cli (1.0.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.4)
@@ -63,6 +64,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   awesome_print (~> 1.9.2)
+  dry-cli
   fun-ruby!
   rake (~> 13.0.6)
   rspec (~> 3.10.0)

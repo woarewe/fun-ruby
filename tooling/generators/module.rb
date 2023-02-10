@@ -13,10 +13,11 @@ module Tooling
       module_function
 
       def call(module_name)
-        file_path = file_path(module_name)
+        module_full_name, file_path = file_path(module_name)
         file_content = render_template(module_name)
         create_file(file_path, file_content)
         require_module(module_name)
+        [module_full_name, file_path]
       end
 
       def render_template(module_name)
@@ -30,9 +31,10 @@ module Tooling
       def file_path(module_name)
         file_name = "#{module_name.underscore}.rb"
         full_path = File.expand_path(file_name, Config::MODULES_DIR)
-        raise "The module FunRuby::Modules::#{module_name.camelize} already exists" if File.exists?(full_path)
+        module_full_name = "FunRuby::Modules::#{module_name.camelize}"
+        raise "The module #{module_full_name} already exists" if File.exists?(full_path)
 
-        full_path
+        [module_full_name, full_path]
       end
 
       def create_file(path, content)
