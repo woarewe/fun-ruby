@@ -37,7 +37,7 @@ gem install fun-ruby
 
 **All kinds of contributions are welcome!**
 
-However, you don't really know where to start read the details down below.
+In case you don't really know where to start, just read the details down below 😉
 
 ### Library structure
 
