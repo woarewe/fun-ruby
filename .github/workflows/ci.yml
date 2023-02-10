@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+env:
+ BUNDLE_WITHOUT: development
+ 
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -32,7 +35,6 @@ jobs:
         with:
           ruby-version: ${{matrix.ruby}}
           bundler-cache: true
-          bundler: --without-development
 
       - name: Rubocop
         run: bin/rubocop
