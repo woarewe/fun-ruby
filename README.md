@@ -8,7 +8,9 @@ A toolbox for writing functional Ruby.
 
 ## Features
 
-### Curried by design
+### Action first, data last
+
+### 100% Curried
 
 ### Placeholder
 
@@ -42,8 +44,8 @@ In case you don't really know where to start, just read the details down below ð
 ### Library structure
 
 1) All the implemented modules are located under `lib/fun_ruby/modules`.
-Most of the modules have the names that correspondent Ruby Core classes/modules have.
-So, if you are looking for the entry point of `Array` you will find it
+Most of the modules have the names matching correspondent Ruby Core classes/modules.
+For example, if you are looking for the entry point of `Array` you will find it
 at `lib/fun_ruby/modules/array.rb`
 
 2) A module entry point file contains only the module definition and
