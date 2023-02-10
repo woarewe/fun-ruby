@@ -113,6 +113,130 @@ paste_in_the_middle =  curried.("Beginning", F._, "End")
 paste_in_the_middle.("I'm in the middle") # => "Beginning I'm in the middle End"
 ```
 
+### Definition containers
+
+Let's say we've got a pair of functions
+and we would like to reuse them across the different parts
+of our application. Since local variables are not exportable
+to other files the ways we can share the functions are:
+1. Assigning them to constants
+2. Assigning them to global variables
+3. Returning them from class singleton methods
+
+But none of the approaches are really needed because
+the library comes with a container where you can define.
+Here is an example:
+
+```ruby
+# definition.rb
+
+F.define do
+  f(:repo_stars) { F::Modules::Hash.fetch(:stars) }
+  f(:repo_name) { F::Modules::Hash.fetch(:name) }
+end
+
+# another_file.rb
+repo = { stars: 33, name: 'FunRuby'}
+F.container.fetch(:repo_name).(repo) # => "FunRuby"
+F.container.fetch(:repo_stars).(repo) # => 33
+```
+
+What? Function names have the repetitive part **repo**? Let's puts
+them under a namespace!
+
+
+```ruby
+# definition.rb
+F.define do
+  namespace :repo do
+    f(:stars) { F::Modules::Hash.fetch(:stars) }
+    f(:name) { F::Modules::Hash.fetch(:stars) }
+  end
+end
+
+# another_file.rb
+repo = { stars: 33, name: 'FunRuby'}
+F.container.fetch("repo.name").(repo) # => "FunRuby"
+F.container.fetch("repo.stars").(repo) # => 33
+```
+
+But what I we want to use the functions inside classes or modules?
+The way we access the function and call it seems too long and inconvenient.
+This is not a problem either because the container can be imported.
+
+```ruby
+# definition.rb
+F.define do
+  namespace :repo do
+    f(:stars) { F::Modules::Hash.fetch(:stars) }
+    f(:name) { F::Modules::Hash.fetch(:name) }
+  end
+  
+  namespace :hello do
+    f(:word) { -> { puts "Hello, world" } }
+  end
+end
+
+# another_file.rb
+class Feature
+  include F.import(:repo, :hello)
+  
+  def execute(repo)
+    puts f(:stars).(repo)
+    puts f(:name).(repo)
+    puts f(:word).()
+  end
+end
+
+repo = { stars: 33, name: 'FunRuby'}
+Feature.new.execute(repo)
+```
+
+Sometimes it also happens that the definition of
+a function is deeply nested or there are two functions or two namespaces
+that have the same name and we want them both to be present in the same scope.
+The container imports support aliasing.
+You can alias both a final function and a namespace.
+
+
+```ruby
+F.define do
+  namespace :foo do
+    namespace :buzz do
+      namespace :bar do
+        f(:hello) { -> { puts "Hello from Bar!" } }
+        f(:goodbye) { -> { puts "Goodbye from Bar!" } }
+      end
+    end
+  end
+  
+  namespace :green do
+    namespace :red do
+      namespace :blue do
+        f(:hello) { -> { puts "Hello from Blue!" } }
+        f(:goodbye) { -> { puts "Goodbye from Blue!" } }
+      end
+    end
+  end
+end
+
+class Feature
+  include F.import(
+    'foo.buzz.bar' => 'top',
+    'green.red.blue' => 'bottom',
+    'foo.buzz.bar.goodbye' => 'top_bye',
+    'green.red.blue.goodbye' => 'bottom_bye'
+  )
+
+  def execute
+    puts f('top.hello').()
+    puts f('bottom.hello').()
+    puts f('top_bye').()
+    puts f('bottom_bye').()
+  end
+end
+```
+
 ### Comprehensive docs & reliable examples
 
 All the functions have RubyDoc with examples
