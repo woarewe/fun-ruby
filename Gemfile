@@ -5,8 +5,8 @@ source "https://rubygems.org"
 gemspec
 
 group :development do
-  gem "dry-cli"
   gem "activesupport"
+  gem "dry-cli"
 end
 
 group :development, :test do
