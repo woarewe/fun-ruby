@@ -1,10 +1,14 @@
 # *Fun*ctional Ruby 🚀
 
-A toolbox for writing functional Ruby.
+An experimental toolbox for writing "functional" Ruby.
 
 ![Alt Text](assets/fun.gif)
 
-## Inspirations
+## Motivation
+
+In 2020 I started looking into functional programming and got really
+excited about having a Ruby library that would make programming in Ruby feel
+as much close as possible to using "pure" functional languages.
 
 ## Features
 
@@ -17,6 +21,8 @@ A toolbox for writing functional Ruby.
 ### Definition container
 
 ## Installation
+
+### Useful resources
 
 Add this line to your application's Gemfile:
 
@@ -34,6 +40,13 @@ Or install it yourself as:
 gem install fun-ruby
 ```
 
+## Useful resources to dive into functional programming
+
+ - [Hey Lodash, you're doing it wrong!](https://www.youtube.com/watch?v=ixbJrJTOnF8)
+ - [Ramda JS](https://ramdajs.com/)
+ - [Ramda JS Ruby Port](https://github.com/lazebny/ramda-ruby)
+ - [Lambda Calculus - Fundamentals of Lambda Calculus & Functional Programming in JavaScript](https://www.youtube.com/watch?v=3VQ382QG-y4)
+ - [Why Isn't Functional Programming the Norm? – Richard Feldman](https://www.youtube.com/watch?v=QyJZzq0v7Z4)
 
 ## Contributing
 
