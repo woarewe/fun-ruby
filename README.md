@@ -12,17 +12,121 @@ as much close as possible to using "pure" functional languages.
 
 ## Features
 
-### Action first, data last
-
 ### 100% Curried
 
-### Placeholder
+A function will be called only after all the required arguments are
+passed. Until that the function will be returning a wrapper
+expecting the rest of arguments.
 
-### Definition container
+```ruby
+# F::Modules::Hash.fetch requires two arguments:
+# - a key
+# - a hash
+
+# Calling a function without any argument returns 
+# a function expecting the rest arguments to be applied 
+# either one by one or altogether at once
+f = F::Modules::Hash.fetch 
+f.(:number, { number: 3 }) # => 3
+f.(:number).({ number: 3 }) # => 3
+```
+
+### Action first, data last
+
+> For better understanding I strongly recommend
+> to watch this [video](https://www.youtube.com/watch?v=ixbJrJTOnF8).
+
+Given that functions are curried, changing function signatures
+in order to have the params that change more rarely first and
+the params that change more often last allows us to 
+create new more specific functions from more generic ones.
+
+```ruby
+  rails = { stars: 52_300 }
+  f_ruby = { stars: 3 }
+  repos = [rails, f_ruby]
+  
+  # Creating a function that gets a number stars
+  stars = F::Modules::Hash.fetch(:stars)
+  stars.(rails) # => 52_300
+  stars.(f_ruby) # => 3
+  
+  # Creating a function that gets a number of stars for an array
+  stars_map = F::Modules::Enum.map(get_stars)
+  stars_map.(repos) #=> [52_300, 3]
+```
+
+### Argument placeholders
+
+However, there are situations when data remains the same
+but the applicable actions differ. In such case there is
+a placeholder `F._` that can help to achieve the desired behavior.
+
+```ruby
+rails = { stars: 52_300, forks: 10_000 } 
+fetch_from_rails = F::Modules::Hash.fetch(F._, rails)
+fetch_from_rails.(:stars) # => 52_300
+fetch_from_rails.(:forks) # => 10_000
+```
+
+### Helpful utils
+
+The library goes with a set of utils that will
+help you achieve your goals in an elegant way.
+For example, the pipe function:
+```ruby
+repos = [
+  { name: 'Rails', stars: 52_300 },
+  { name: 'FunRuby', stars: 3 }
+]
+
+label = F::Modules::Function.pipe(
+  F::Modules::Hash.values_at([:name, :stars]), # returns pairs of [name, stars]
+  F::Modules::Array.join(" -> "), # joins the pairs
+)
+
+labels = F::Modules::Enum.map(label)
+labels.(repos) # => ["Rails -> 52300", "FunRuby -> 3"]
+```
+
+Or the curry function that will make the
+functions from your codebase fully compatible with the library utils.
+
+```ruby
+# A function from your codebase
+def join_three_values(first, second, third)
+  [first, second, third].join(' ')
+end
+
+a, b, c  = ["A", "B", "C"]
+
+join_three_values(a, b, c) #=> "A B C"
+
+# Making it curried...
+curried = F::Modules::Function.curry(method(:join_three_values))
+
+# Using it as a library function
+curried.(a).(b).(c) # => "A B C"
+
+# It evens supports placeholders
+paste_in_the_middle =  curried.("Beginning", F._, "End")
+paste_in_the_middle.("I'm in the middle") # => "Beginning I'm in the middle End"
+```
+
+### Comprehensive docs & reliable examples
+
+All the functions have RubyDoc with examples
+that are run as tests on CI. So, they are just working!
+
+API Docs.
+
+### Ruby core compatible
+
+**In progress...**
+
+The library is aimed to cover most of th methods the core ruby classes have.
 
 ## Installation
-
-### Useful resources
 
 Add this line to your application's Gemfile:
 
