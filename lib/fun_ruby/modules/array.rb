@@ -19,3 +19,5 @@ end
 
 require_relative "array/join"
 require_relative "array/size"
+require_relative "array/first"
+require_relative "array/last"
