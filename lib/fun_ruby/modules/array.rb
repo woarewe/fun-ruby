@@ -17,7 +17,9 @@ module FunRuby
   end
 end
 
-require_relative "array/join"
-require_relative "array/size"
 require_relative "array/first"
+require_relative "array/join"
 require_relative "array/last"
+require_relative "array/max"
+require_relative "array/min"
+require_relative "array/size"
