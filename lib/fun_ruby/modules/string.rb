@@ -76,6 +76,28 @@ module FunRuby
         curry_implementation(:size, string)
       end
 
+      # Removes leading and trailing whitespaces from a string
+      #
+      # @since 0.1.0
+      #
+      # @param string [::String]
+      #
+      # @return [::String]
+      #
+      # @example Basics
+      #   F::Modules::String.strip("  hello  ") #=> "hello"
+      #
+      # @example Curried
+      #   curried = F::Modules::String.strip
+      #   curried.("  hello  ") #=> "hello"
+      #
+      # @example Curried with placeholder
+      #   curried = F::Modules::String.strip(F._)
+      #   curried.("  hello  ") #=> "hello"
+      def strip(string = F._)
+        curry_implementation(:strip, string)
+      end
+
       private
 
       def _split(splitter, string)
@@ -88,6 +110,10 @@ module FunRuby
 
       def _size(string)
         _string(string).size
+      end
+
+      def _strip(string)
+        _string(string).strip
       end
 
       def _string(string)
