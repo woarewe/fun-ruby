@@ -212,3 +212,6 @@ module FunRuby
     end
   end
 end
+
+require_relative "enum/max"
+require_relative "enum/min"
