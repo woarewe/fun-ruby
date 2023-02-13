@@ -54,72 +54,6 @@ module FunRuby
         curry_implementation(:concat, first, second)
       end
 
-      # Calculates the size of a string
-      #
-      # @since 0.1.0
-      #
-      # @param string [::String]
-      #
-      # @return [::Integer]
-      #
-      # @example Basics
-      #   F::Modules::String.size("hello") #=> 5
-      #
-      # @example Curried
-      #   curried = F::Modules::String.size
-      #   curried.("hello") #=> 5
-      #
-      # @example Curried with placeholder
-      #   curried = F::Modules::String.size(F._)
-      #   curried.("hello") #=> 5
-      def size(string = F._)
-        curry_implementation(:size, string)
-      end
-
-      # Removes leading and trailing whitespaces from a string
-      #
-      # @since 0.1.0
-      #
-      # @param string [::String]
-      #
-      # @return [::String]
-      #
-      # @example Basics
-      #   F::Modules::String.strip("  hello  ") #=> "hello"
-      #
-      # @example Curried
-      #   curried = F::Modules::String.strip
-      #   curried.("  hello  ") #=> "hello"
-      #
-      # @example Curried with placeholder
-      #   curried = F::Modules::String.strip(F._)
-      #   curried.("  hello  ") #=> "hello"
-      def strip(string = F._)
-        curry_implementation(:strip, string)
-      end
-
-      # Capitalizes the first letter of a string
-      #
-      # @since 0.1.0
-      #
-      # @param string [::String]
-      #
-      # @return [::String]
-      #
-      # @example Basics
-      #   F::Modules::String.capitalize("hello") #=> "Hello"
-      #
-      # @example Curried
-      #   curried = F::Modules::String.capitalize
-      #   curried.("hello") #=> "Hello"
-      #
-      # @example Curried with placeholder
-      #   curried = F::Modules::String.capitalize(F._)
-      #   curried.("hello") #=> "Hello"
-      def capitalize(string = F._)
-        curry_implementation(:capitalize, string)
-      end
-
       private
 
       def _split(splitter, string)
@@ -130,21 +64,13 @@ module FunRuby
         _string(first) + _string(second)
       end
 
-      def _size(string)
-        _string(string).size
-      end
-
-      def _strip(string)
-        _string(string).strip
-      end
-
-      def _capitalize(string)
-        _string(string).capitalize
-      end
-
       def _string(string)
         string.to_s
       end
     end
   end
 end
+
+require_relative "string/capitalize"
+require_relative "string/size"
+require_relative "string/strip"
