@@ -9,11 +9,15 @@ module FunRuby
     NAMESPACE_SEPARATOR = "."
     NOT_EVALUATED = Object.new.freeze
 
+    # Returns a list of files with definitions for the container
+    attr_reader :definition_paths
+
     # @private
     def initialize(config = Config.new)
       @storage = {}
       @mutex = Mutex.new
       @config = config
+      @definition_paths = Set.new
     end
 
     # @private
@@ -41,6 +45,12 @@ module FunRuby
     # @private
     def import(*aliases)
       Mixin.build(aliases: aliases)
+    end
+
+    # Adds a path to the definition path lit
+    def add_definition_path(path)
+      # TODO: Add file existence validations and etc.
+      @definition_paths.add(path)
     end
 
     private
