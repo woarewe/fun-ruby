@@ -70,3 +70,7 @@ module FunRuby
     end
   end
 end
+
+require_relative "string/capitalize"
+require_relative "string/size"
+require_relative "string/strip"
