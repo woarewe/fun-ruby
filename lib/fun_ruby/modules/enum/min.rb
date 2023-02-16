@@ -8,26 +8,28 @@ module FunRuby
       #
       # @since 0.1.0
       #
+      # @param function [#call/1] ->(left, right) { returns Boolean }
       # @param enumerable [#to_enum]
       #
       # @return [Object]
       #
       # @example Basics
-      #   F::Modules::Enum.min([3, 2, 1]) # => 1
-      #   F::Modules::Enum.min([]) # => nil
+      #   F::Modules::Enum.min(->(first, second) { first <=> second }, [1, 2, 3]) # => 1
+      #   F::Modules::Enum.min(->(first, second) { first <=> second }, [1, 2, 3]) #=> 1
+      #   F::Modules::Enum.min(->(first, second) { first <=> second }, []) # => nil
       #
       # @example Curried
-      #   curried = F::Modules::Enum.min
-      #   curried.([3, 2, 1]) # => 1
+      #   curried = F::Modules::Enum.min(->(first, second) { first <=> second })
+      #   curried.([1, 2, 3]) # => 1
       #   curried.([]) # => nil
-      def min(enumerable = F._)
-        curry_implementation(:min, enumerable)
+      def min(function = F._, enumerable = F._)
+        curry_implementation(:min, function, enumerable)
       end
 
       private
 
-      def _min(enumerable)
-        _enum(enumerable).min
+      def _min(function, enumerable)
+        _enum(enumerable).min(&function)
       end
     end
   end
