@@ -8,7 +8,7 @@ module FunRuby
       #
       # @since 0.1.0
       #
-      # @param function [#call/1] ->(left, right) { returns Boolean }
+      # @param function [#call/1] ->(left, right) { returns Integer }
       # @param enumerable [#to_enum]
       #
       # @return [Object]
