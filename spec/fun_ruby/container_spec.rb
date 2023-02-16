@@ -59,11 +59,9 @@ describe FunRuby::Container do
   describe "#add_definition_path" do
     it "stores a new definition paths" do
       container = described_class.new
-      path = File.expand_path("./container/fixtures/definition_path.rb", __dir__)
-      binding.irb
-      container.add_definition_path(path)
+      container.add_definition_path(__FILE__)
 
-      expect(container.definition_paths).to include(path)
+      expect(container.definition_paths).to include(__FILE__)
     end
   end
 end
