@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "container/mixin"
+require_relative "container/config"
 
 module FunRuby
   # @private
@@ -9,16 +10,17 @@ module FunRuby
     NOT_EVALUATED = Object.new.freeze
 
     # @private
-    def initialize
+    def initialize(config = Config.new)
       @storage = {}
       @mutex = Mutex.new
+      @config = config
     end
 
     # @private
     def define(key, &block)
       key = key.to_s
 
-      raise KeyError, "#{key.inspect} is already defined" if storage.key?(key)
+      raise KeyError, "#{key.inspect} is already defined" if storage.key?(key) && config.cant_override?
       raise TypeError, "block should be given" unless block_given?
 
       storage[key] = init_meta(block)
@@ -43,7 +45,7 @@ module FunRuby
 
     private
 
-    attr_reader :storage, :mutex
+    attr_reader :storage, :mutex, :config
 
     def init_meta(definition)
       {

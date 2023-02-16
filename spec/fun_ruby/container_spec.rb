@@ -22,6 +22,19 @@ describe FunRuby::Container do
 
       expect { container.define(key) { function } }.to raise_error(KeyError)
     end
+
+    it "does not raise an error when overriding is allowed by config", :aggregate_failures do
+      config = described_class::Config.new(override: true)
+      container = described_class.new(config)
+      first_definition = ->(x, y) { x + y }
+      key = "sum"
+      second_definition = ->(a, b) { a - b }
+
+      container.define(key) { first_definition }
+
+      expect { container.define(key) { second_definition } }.not_to raise_error
+      expect(container.fetch(key)).to equal(second_definition)
+    end
   end
 
   describe "#fetch" do
