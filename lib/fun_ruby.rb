@@ -35,6 +35,17 @@ module FunRuby
     @container ||= Container.new
   end
 
+  # Accepts a container that will be considered global
+  #
+  # @since 0.1.0
+  #
+  # @return [FunRuby::Container]
+  def container=(container)
+    raise ArgumentError, "The global container is already defined" if instance_variable_defined?(:@container)
+
+    @container = container
+  end
+
   # Allows to import global container to your classes and modules
   #
   # @since 0.1.0
