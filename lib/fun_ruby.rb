@@ -29,6 +29,14 @@ module FunRuby
     Container::Define.build(container: target).(&block)
   end
 
+  # Accepts a glob of files where the container is defined and add the definition paths to the container
+  def add_definition_paths(glob, to: nil)
+    target = to || container
+    Dir.glob(glob).each do |path|
+      target.add_definition_path(path, false)
+    end
+  end
+
   # Returns a global container
   #
   # @since 0.1.0

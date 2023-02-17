@@ -70,4 +70,22 @@ describe FunRuby do
       expect(container.definition_paths.first).to eq(definition_path)
     end
   end
+
+  describe ".add_definition_paths" do
+    it "finds all the files matching the passed glob and stores them as not loaded definition paths" do
+      container = described_class::Container.new
+      glob = File.expand_path("./fixtures/container_definitions/**/*.rb", __dir__)
+
+      described_class.add_definition_paths(glob, to: container)
+
+      Dir.glob(glob).each do |file_path|
+        definition_path = container.definition_paths.find do |definition|
+          definition.path == file_path
+        end
+
+        expect(definition_path).not_to be(nil)
+        expect(definition_path.loaded?).to be(false)
+      end
+    end
+  end
 end
