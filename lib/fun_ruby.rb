@@ -45,6 +45,27 @@ module FunRuby
     end
   end
 
+  # Enables hot reloading
+  # TODO: Create a better implementation
+  # TODO: Cover by tests
+  # TODO: Write a better documentation
+  # TODO: Check if a container support overriding
+  def enable_hot_reloading!(target = nil)
+    target ||= container
+
+    target.definition_paths.each do |definition|
+      definition_dir = begin
+        *dir_parts, _file = definition.path.split("/")
+        dir_parts.join("/")
+      end
+
+      listener = Listen.to(definition_dir) do |modified|
+        load definition.path if modified.include?(definition.path)
+      end
+      listener.start
+    end
+  end
+
   # Returns a global container
   #
   # @since 0.1.0
