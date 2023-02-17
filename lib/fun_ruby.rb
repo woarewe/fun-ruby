@@ -2,6 +2,7 @@
 
 require_relative "fun_ruby/container"
 require_relative "fun_ruby/container/define"
+require_relative "fun_ruby/container/dsl"
 
 # Top-level namespace
 module FunRuby
