@@ -22,8 +22,9 @@ module FunRuby
   #     end
   #   end
   #   F.container.fetch("functions.sum").(2, 3) # => 5
-  def define(&block)
-    Container::Define.build(container: container).(&block)
+  def define(target = nil, &block)
+    target ||= container
+    Container::Define.build(container: target).(&block)
   end
 
   # Returns a global container
