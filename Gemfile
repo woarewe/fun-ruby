@@ -4,6 +4,8 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "listen"
+
 group :development do
   gem "activesupport"
   gem "dry-cli"

@@ -22,8 +22,48 @@ module FunRuby
   #     end
   #   end
   #   F.container.fetch("functions.sum").(2, 3) # => 5
-  def define(&block)
-    Container::Define.build(container: container).(&block)
+  def define(target = nil, &block)
+    target ||= container
+    file_path, _line_number = caller.first.split(":")
+    target.add_definition_path(file_path, true)
+    Container::Define.build(container: target).(&block)
+  end
+
+  # Accepts a glob of files where the container is defined and add the definition paths to the container
+  def add_definition_paths(glob, to: nil)
+    target = to || container
+    Dir.glob(glob).each do |path|
+      target.add_definition_path(path, false)
+    end
+  end
+
+  # Loads all the defined paths for the passed container
+  def load_definitions!(target = nil)
+    target ||= container
+    target.definition_paths.reject(&:loaded?).each do |definition|
+      load definition.path
+    end
+  end
+
+  # Enables hot reloading
+  # TODO: Create a better implementation
+  # TODO: Cover by tests
+  # TODO: Write a better documentation
+  # TODO: Check if a container support overriding
+  def enable_hot_reloading!(target = nil)
+    target ||= container
+
+    target.definition_paths.each do |definition|
+      definition_dir = begin
+        *dir_parts, _file = definition.path.split("/")
+        dir_parts.join("/")
+      end
+
+      listener = Listen.to(definition_dir) do |modified|
+        load definition.path if modified.include?(definition.path)
+      end
+      listener.start
+    end
   end
 
   # Returns a global container
@@ -33,6 +73,17 @@ module FunRuby
   # @return [FunRuby::Container]
   def container
     @container ||= Container.new
+  end
+
+  # Accepts a container that will be considered global
+  #
+  # @since 0.1.0
+  #
+  # @return [FunRuby::Container]
+  def container=(container)
+    raise ArgumentError, "The global container is already defined" if instance_variable_defined?(:@container)
+
+    @container = container
   end
 
   # Allows to import global container to your classes and modules
