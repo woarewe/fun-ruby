@@ -7,7 +7,7 @@ module FunRuby
       private_class_method :new
 
       # @private
-      def self.build(aliases: [], container: FunRuby.container)
+      def self.build(aliases: [], container:)
         formatted = aliases.each_with_object({}) do |key, namespace|
           if key.is_a?(::Hash)
             namespace.merge!(key.map { |k, v| [k, v].map(&:to_s) }.to_h)

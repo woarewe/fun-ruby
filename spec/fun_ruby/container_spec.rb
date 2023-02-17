@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_lib "fun_ruby/container"
+require_lib "fun_ruby"
 
 describe FunRuby::Container do
   describe "#define" do
@@ -40,6 +40,30 @@ describe FunRuby::Container do
       key = "sum"
 
       expect { container.fetch(key) }.to raise_error(KeyError)
+    end
+  end
+
+  describe "#import" do
+    it "works for custom containers" do
+      function = -> {}
+
+      custom_container = described_class.new.tap do |container|
+        described_class::Define.build(container: container).instance_exec do
+          namespace :math do
+            f(:value) { function }
+          end
+        end
+      end
+
+      target_class = Class.new do
+        include custom_container.import
+
+        def call
+          f("math.value")
+        end
+      end
+
+      expect(target_class.new.()).to equal(function)
     end
   end
 end
