@@ -24,6 +24,8 @@ module FunRuby
   #   F.container.fetch("functions.sum").(2, 3) # => 5
   def define(target = nil, &block)
     target ||= container
+    file_path, _line_number = caller.first.split(":")
+    target.add_definition_path(file_path, true)
     Container::Define.build(container: target).(&block)
   end
 

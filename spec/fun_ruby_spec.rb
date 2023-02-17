@@ -51,5 +51,23 @@ describe FunRuby do
       expect(container.fetch("hello.world")).to equal(function)
       expect { F.container.fetch("hello.world") }.to raise_error(KeyError)
     end
+
+    it "saves a definition path of the file where it's executed as already loaded" do
+      container = described_class::Container.new
+      function = ->(x) { x }
+
+      described_class.define(container) do
+        namespace :hello do
+          f(:world) { function }
+        end
+      end
+
+      definition_path = described_class::Container::DefinitionPath.new(
+        path: __FILE__,
+        loaded: true
+      )
+
+      expect(container.definition_paths.first).to eq(definition_path)
+    end
   end
 end
