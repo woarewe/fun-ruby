@@ -15,4 +15,11 @@ require_relative "../lib/fun-ruby"
 
 require_relative "../tooling/generators/module"
 
+class Container
+  extend F::Container::DSL
+
+  namespace :math do
+    f(:sum) { ->(x, y) { x + y}}
+  end
+end
 IRB.start(__FILE__)
