@@ -37,6 +37,14 @@ module FunRuby
     end
   end
 
+  # Loads all the defined paths for the passed container
+  def load_definitions!(target = nil)
+    target ||= container
+    target.definition_paths.reject(&:loaded?).each do |definition|
+      load definition.path
+    end
+  end
+
   # Returns a global container
   #
   # @since 0.1.0
