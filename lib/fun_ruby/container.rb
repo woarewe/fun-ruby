@@ -2,6 +2,7 @@
 
 require_relative "container/mixin"
 require_relative "container/config"
+require_relative "container/definition_path"
 
 module FunRuby
   # @private
@@ -48,7 +49,8 @@ module FunRuby
     end
 
     # Adds a path to the definition path lit
-    def add_definition_path(path)
+    def add_definition_path(path, loaded = false)
+      path = DefinitionPath.new(path: path, loaded: loaded)
       # TODO: Add file existence validations and etc.
       @definition_paths.add(path)
     end

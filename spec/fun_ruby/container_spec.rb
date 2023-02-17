@@ -57,11 +57,26 @@ describe FunRuby::Container do
   end
 
   describe "#add_definition_path" do
-    it "stores a new definition paths" do
+    it "stores a new definition paths as not loaded yet" do
       container = described_class.new
       container.add_definition_path(__FILE__)
 
-      expect(container.definition_paths).to include(__FILE__)
+      definition_path = described_class::DefinitionPath.new(
+        path: __FILE__,
+        loaded: false
+      )
+      expect(container.definition_paths.first).to eq(definition_path)
+    end
+
+    it "allows storing definition paths as already loaded" do
+      container = described_class.new
+      container.add_definition_path(__FILE__, true)
+
+      definition_path = described_class::DefinitionPath.new(
+        path: __FILE__,
+        loaded: true
+      )
+      expect(container.definition_paths.first).to eq(definition_path)
     end
   end
 end
