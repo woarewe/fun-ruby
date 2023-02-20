@@ -7,18 +7,14 @@ module FunRuby
     # @private
     module Mixin
       # @private
-      def self.build(aliases:)
+      def self.build(aliases:, container:)
         mixin = Module.new
-        mixin.send(:define_method, :_resolve) { Resolve.build(aliases: aliases) }
+        mixin.send(:define_method, :_resolve) { Resolve.build(aliases: aliases, container: container) }
         mixin.send(:include, self)
         mixin
       end
 
       private
-
-      def _resolve
-        @_resolve ||= Resolve.build
-      end
 
       def f(key)
         _resolve.(key)

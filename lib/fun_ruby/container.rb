@@ -38,7 +38,7 @@ module FunRuby
 
     # @private
     def import(*aliases)
-      Mixin.build(aliases: aliases)
+      Mixin.build(aliases: aliases, container: self)
     end
 
     private
